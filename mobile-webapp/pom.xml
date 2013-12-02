@@ -390,6 +390,10 @@
             <id>mgwt</id>
             <url>https://oss.sonatype.org/service/local/repositories/snapshots/content/</url>
         </repository>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
     </repositories>
 
 </project>
