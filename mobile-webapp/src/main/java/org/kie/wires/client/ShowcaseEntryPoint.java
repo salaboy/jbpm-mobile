@@ -34,13 +34,9 @@ import com.googlecode.mgwt.ui.client.util.SuperDevModeUtil;
 import com.googlecode.mgwt.ui.client.widget.Button;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.MTextBox;
-import java.util.Date;
-import org.jboss.errai.common.client.api.Caller;
-import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.SyncBeanManager;
-import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
 import org.uberfire.client.UberFirePreferences;
 import org.uberfire.client.mvp.ActivityManager;
 import org.uberfire.client.mvp.PlaceManager;
@@ -60,9 +56,9 @@ public class ShowcaseEntryPoint {
 
     @Inject
     private ActivityManager activityManager;
-
-    @Inject
-    Caller<TaskServiceEntryPoint> taskServices;
+//
+//    @Inject
+//    Caller<TaskServiceEntryPoint> taskServices;
 
     @AfterInitialization
     public void startApp() {
@@ -132,12 +128,12 @@ public class ShowcaseEntryPoint {
         button.addTapHandler(new TapHandler() {
 
             public void onTap(TapEvent event) {
-                taskServices.call(new RemoteCallback<Long>() {
-                    @Override
-                    public void callback(Long commentId) {
-                        textBox.setText(String.valueOf(commentId));
-                    }
-                }).addComment(1, "text of the comment", "salaboy", new Date());
+//                taskServices.call(new RemoteCallback<Long>() {
+//                    @Override
+//                    public void callback(Long commentId) {
+//                        textBox.setText(String.valueOf(commentId));
+//                    }
+//                }).addComment(1, "text of the comment", "salaboy", new Date());
                 animationHelper.goTo(layoutPanel2, Animation.SLIDE);
             }
         });
