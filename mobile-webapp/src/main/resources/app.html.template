@@ -3,10 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>Wires Showcase</title>
-    <link rel="stylesheet" href="css/uberfire-loading.css">
-    <link rel="stylesheet" href="css/uberfire-showcase.css">
-    <link rel="stylesheet" href="css/ruleflow.css">
+    <title>KIE Mobile Showcase</title>
+    
 </head>
 <body>
 <iframe id="__gwt_historyFrame" style="width: 0; height: 0; border: 0"></iframe>
@@ -22,7 +20,7 @@
 </div>
 
 <!-- The GWT js file generated at run time -->
-<script type="text/javascript" src='org.kie.wires.WiresShowcase.nocache.js'></script>
+<script type="text/javascript" src='org.kie.mobile.MobileShowcase.nocache.js'></script>
 
 </body>
 </html>

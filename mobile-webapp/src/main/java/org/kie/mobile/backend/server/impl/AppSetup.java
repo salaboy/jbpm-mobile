@@ -1,4 +1,4 @@
-package org.kie.wires.backend.server.impl;
+package org.kie.mobile.backend.server.impl;
 
 import java.util.HashMap;
 import javax.annotation.PostConstruct;

@@ -19,222 +19,280 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.kie</groupId>
+    <parent>
+        <groupId>org.jbpm</groupId>
+        <artifactId>jbpm-console-ng</artifactId>
+        <version>6.1.0-SNAPSHOT</version>
+    </parent>
+    
     <artifactId>mobile-webapp</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
 
     <name>Mobile WebApp</name>
     <description>Mobile PoC WebApp</description>
     <properties>
-        
-        <uberfire.version>0.4.0-SNAPSHOT</uberfire.version>
-        <errai.version>2.4.1.Final</errai.version>
-        <gwt.version>2.5.0</gwt.version>
-        <jetty.version>6.1.25</jetty.version>
-        <weld.version>1.1.13.Final</weld.version>
-        <cdi-api.version>1.0-SP4</cdi-api.version>
-        <logback.version>1.0.9</logback.version>
-        <slf4j.version>1.7.2</slf4j.version>
-        <mgwt.version>1.2.0-SNAPSHOT</mgwt.version>
+        <mgwt.version>1.1.2</mgwt.version>
+       
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-ci</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.ant</groupId>
+                    <artifactId>ant</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+       
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+       
         <dependency>
             <groupId>com.googlecode.mgwt</groupId>
             <artifactId>mgwt</artifactId>
             <version>${mgwt.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-console-ng-human-tasks-backend</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                    <groupId>org.jboss.spec.javax.transaction</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jbpm-form-modeler-api</artifactId>
+                    <groupId>org.jbpm</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jbpm-console-ng-business-domain-api</artifactId>
+                    <groupId>org.jbpm</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guvnor-services-api</artifactId>
+                    <groupId>org.guvnor</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-console-ng-business-domain-api</artifactId>
+            
+        </dependency>
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-console-ng-business-domain-backend</artifactId>
+            
+        </dependency-->
+    
+
         
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-js</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.uberfire</groupId>
             <artifactId>uberfire-server</artifactId>
-            <version>${uberfire.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-security-client</artifactId>
-            <version>${uberfire.version}</version>
         </dependency>
+        
+        
 
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-security-server</artifactId>
-            <version>${uberfire.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-backend-server</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-client-api</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-widgets-core-client</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-widgets-commons</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-widget-markdown</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-       
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-workbench</artifactId>
-            <version>${uberfire.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-ext</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <version>${cdi-api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-nio2-jgit</artifactId>
-            <version>${uberfire.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-nio2-fs</artifactId>
-            <version>${uberfire.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-commons</artifactId>
-            <version>${uberfire.version}</version>
+            <artifactId>uberfire-io</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.uberfire</groupId>
+            <artifactId>uberfire-commons</artifactId>
+        </dependency>
+         
+        <dependency>
+            <groupId>org.uberfire</groupId>
+            <artifactId>uberfire-backend-server</artifactId>
+        </dependency>
         <!-- Errai AS -->
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-jboss-as-support</artifactId>
-            <version>${errai.version}</version>
         </dependency>
 
         <!-- Errai Core -->
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-bus</artifactId>
-            <version>${errai.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-ioc</artifactId>
-            <version>${errai.version}</version>
         </dependency>
 
         <!-- CDI Integration Modules -->
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-cdi-client</artifactId>
-            <version>${errai.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-javax-enterprise</artifactId>
-            <version>${errai.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-weld-integration</artifactId>
-            <version>${errai.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.errai</groupId>
             <artifactId>errai-cdi-jetty</artifactId>
-            <version>${errai.version}</version>
+            
+        </dependency>
+         <dependency>
+            <groupId>org.jboss.errai</groupId>
+            <artifactId>errai-marshalling</artifactId>
+            
         </dependency>
 
+       
         <!-- CDI Development Utils -->
-        <!-- This must be placed above com.google.gwt:gwt-dev to override the Jetty that is present there -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <!-- This must be placed above com.google.gwt:gwt-dev to override the 
+        Jetty that is present there -->
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty</artifactId>
-            <version>${jetty.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty-plus</artifactId>
-            <version>${jetty.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>geronimo-spec-jta</artifactId>
+                    <groupId>geronimo-spec</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty-naming</artifactId>
-            <version>${jetty.version}</version>
         </dependency>
 
         <!-- Weld Modules -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>${weld.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-core</artifactId>
-            <version>${weld.version}</version>
+        </dependency>
+       
+        <dependency>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-impl</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-logging</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+       
         <!-- GWT and GWT Extensions -->
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
             <scope>provided</scope>
+        </dependency> 
+
+        <!-- Rouge imports to avoid OSGi errors -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+        </dependency>
+       
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+        </dependency>
+       
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+        </dependency>
+        <!-- it's needed for hosted mode only and will be filtered out by assembly-->
+        <dependency>
+            <groupId>org.codehaus.btm</groupId>
+            <artifactId>btm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-shared-services</artifactId>
+        </dependency>
+       
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-kie-services</artifactId>
             
         </dependency>
+       
     </dependencies>
 
     <build>
@@ -251,18 +309,22 @@
         </resources>
 
         <plugins>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.5.0</version>
                 <configuration>
-                    <module>org.kie.wires.FastCompiledWiresShowcase</module>
+                    <module>org.kie.mobile.FastCompiledMobileShowcase</module>
                     <logLevel>INFO</logLevel>
-                    <runTarget>org.kie.wires.WiresShowcase/Wires.html</runTarget>
-                    <extraJvmArgs>-Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
+                    <compileSourcesArtifacts>
+                        <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
+                    </compileSourcesArtifacts>
+                    <runTarget>org.kie.mobile.MobileShowcase/KIEMobile.html</runTarget>
+                    <extraJvmArgs>-Xmx1024m -XX:MaxPermSize=256m -Djetty.custom.sys.classes=bitronix;javax.transaction</extraJvmArgs>
                     <soyc>false</soyc>
+                    <strict>false</strict>
                     <server>org.jboss.errai.cdi.server.gwt.JettyLauncher</server>
+                    <!-- drools-compiler has dependency on org.eclipse.jdt.core.compiler:ecj:jar:3.5.1:compile, 
+                    see http://code.google.com/p/google-web-toolkit/issues/detail?id=4479 -->
                     <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
                 </configuration>
                 <executions>
@@ -285,8 +347,6 @@
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <warName>${project.artifactId}</warName>
-                    <outputFileNameMapping>@{artifactId}@-@{baseVersion}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
                     <packagingExcludes>**/javax/**/*.*,**/client/**/*.class</packagingExcludes>
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
@@ -318,48 +378,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.codehaus.mojo</groupId>
-                                        <artifactId>gwt-maven-plugin</artifactId>
-                                        <versionRange>[2.3.0,)</versionRange>
-                                        <goals>
-                                            <goal>resources</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <execute/>
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.jboss.errai</groupId>
-                                        <artifactId>jacoco-gwt-maven-plugin</artifactId>
-                                        <versionRange>[0.0,)</versionRange>
-                                        <goals>
-                                            <goal>prepare-agent</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore/>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
     <profiles>
@@ -377,7 +395,7 @@
                         <artifactId>gwt-maven-plugin</artifactId>
                         <configuration>
                             <!-- Build all GWT permutations and optimize them -->
-                            <module>org.kie.wires.WiresShowcase</module>
+                            <module>org.kie.mobile.MobileShowcase</module>
                             <draftCompile>false</draftCompile>
                         </configuration>
                     </plugin>
@@ -389,10 +407,16 @@
         <repository>
             <id>mgwt</id>
             <url>https://oss.sonatype.org/service/local/repositories/snapshots/content/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>jboss</id>
             <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 

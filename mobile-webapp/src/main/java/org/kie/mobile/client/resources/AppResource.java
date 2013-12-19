@@ -1,4 +1,4 @@
-package org.kie.wires.client.resources;
+package org.kie.mobile.client.resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;

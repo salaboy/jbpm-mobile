@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 JBoss Inc
+ * Copyright 2012 JBoss Inc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,19 @@
  * limitations under the License.
  */
 
-/* Loading indicator at Startup */
-#loading {
-    position: absolute;
-    left: 45%;
-    top: 40%;
-    padding: 2px;
-    z-index: 20001;
-    height: auto;
-    border: 1px solid #ccc;
-}
+package org.kie.mobile.client.resources;
 
-#loading a {
-    color: #225588;
-}
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.ImageResource;
 
-#loading .loading-indicator {
-    background: white;
-    color: #444;
-    font: bold 13px tahoma, arial, helvetica;
-    padding: 10px;
-    margin: 0;
-    height: auto;
-}
+/**
+ * GWT managed images for Workbench
+ */
+public interface AppImages
+        extends
+        ClientBundle {
 
-#loading-msg {
-    font: normal 10px arial, tahoma, sans-serif;
+    @Source("images/uf_user_logo.png")
+    ImageResource ufUserLogo();
+
 }

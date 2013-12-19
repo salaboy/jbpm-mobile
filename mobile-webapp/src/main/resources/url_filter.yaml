@@ -7,7 +7,7 @@ filter:
 
 exclude:
    - /*.ico
-   - /org.kie.wires.WiresShowcase/images/**
-   - /org.kie.wires.WiresShowcase/css/**
+   - /org.kie.mobile.MobileShowcase/images/**
+   - /org.kie.mobile.MobileShowcase/css/**
    - /css/**
    - /plugins/**

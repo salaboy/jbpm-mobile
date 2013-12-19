@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kie.wires.shared.security;
+package org.kie.mobile.shared.security;
 
 import org.uberfire.security.Role;
 

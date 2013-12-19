@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package org.kie.wires.client.resources;
+package org.kie.mobile.shared.security;
 
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-/**
- * GWT managed images for Workbench
- */
-public interface AppImages
-        extends
-        ClientBundle {
+import org.uberfire.security.annotations.RolesType;
 
-    @Source("images/uf_user_logo.png")
-    ImageResource ufUserLogo();
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
 
+@RolesType
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+public @interface ShowcaseRoles {
+
+    AppRoles[] value();
 }

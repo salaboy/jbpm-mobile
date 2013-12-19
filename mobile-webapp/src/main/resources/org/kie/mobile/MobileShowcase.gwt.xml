@@ -3,23 +3,20 @@
     "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
 <module>
     <inherits name="org.jboss.errai.enterprise.CDI"/>
-
-    <inherits name="com.googlecode.mgwt.MGWT"/>
-
-    <inherits name="org.uberfire.UberfireJS"/>
+    <inherits name="com.google.gwt.xml.XML" />
     
-    <inherits name="org.uberfire.security.UberfireSecurityClient"/>
+    <inherits name="com.googlecode.mgwt.MGWT"/>
+    <inherits name="com.googlecode.mgwt.linker.Linker" />
 
-    <inherits name="org.uberfire.UberfireWorkbench"/>
-    <inherits name="org.uberfire.UberfireWidgetsCore"/>
+   
+   <inherits name="org.uberfire.UberfireAPI"/> 
     <inherits name="org.uberfire.UberfireBackend"/>
-
-    <inherits name="org.uberfire.UberfireMarkdownWidget"/>
+    <inherits name="org.uberfire.security.UberfireSecurityAPI"/>
+    <inherits name="org.uberfire.security.UberfireSecurityClient"/>
   
-    <inherits name="com.github.gwtbootstrap.Bootstrap"/>
+    <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksAPI"/>
 
     <!-- Specify the application specific style sheet. -->
-    <stylesheet src='css/uberfire-showcase.css'/>
     <set-property name="user.agent" value="safari" />
 
     <!-- Specify the paths for translatable code -->
