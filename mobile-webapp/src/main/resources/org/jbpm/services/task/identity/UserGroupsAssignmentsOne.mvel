@@ -1,4 +1,5 @@
 usersgroups = [ 
+                new User('demo') : [new Group( "Writer" ),  new Group( "jBPM Developer" ), new Group("Release Manager"), new Group("IT")],
                 new User('salaboy') : [new Group( "Writer" ),  new Group( "jBPM Developer" ), new Group("Release Manager"), new Group("IT")],
                 new User('maciej') : [new Group( "Translator" ),  new Group( "jBPM Developer" )],
                 new User('kris') : [new Group( "Reviewer" ),  new Group( "jBPM Developer" ) ,  new Group( "Project Leaders" )],

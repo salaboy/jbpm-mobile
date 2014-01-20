@@ -11,9 +11,10 @@ import javax.enterprise.context.ApplicationScoped;
 /**
  *
  * @author livthomas
+ * @author salaboy
  */
 @ApplicationScoped
-public class NewTaskViewGwtImpl implements NewTaskView {
+public class NewTaskViewGwtImpl implements NewTaskPresenter.NewTaskView {
 
     private final LayoutPanel panel;
 

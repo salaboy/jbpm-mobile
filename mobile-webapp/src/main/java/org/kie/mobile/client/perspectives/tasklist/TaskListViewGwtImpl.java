@@ -17,29 +17,30 @@ import org.jbpm.console.ng.ht.model.TaskSummary;
 /**
  *
  * @author livthomas
+ * @author salaboy
  */
 @ApplicationScoped
-public class TaskListViewGwtImpl implements TaskListView {
+public class TaskListViewGwtImpl implements TaskListPresenter.TaskListView {
 
     private final LayoutPanel layoutPanel;
-    
+
     private final Button newTaskButton;
-    
-	private PullPanel pullPanel;
-	private PullArrowHeader pullArrowHeader;
+
+    private PullPanel pullPanel;
+    private PullArrowHeader pullArrowHeader;
     private final CellList<TaskSummary> taskList;
 
     public TaskListViewGwtImpl() {
         layoutPanel = new LayoutPanel();
-        
+
         newTaskButton = new Button("New task");
         layoutPanel.add(newTaskButton);
-        
+
         pullPanel = new PullPanel();
-		pullArrowHeader = new PullArrowHeader();
-		pullPanel.setHeader(pullArrowHeader);
+        pullArrowHeader = new PullArrowHeader();
+        pullPanel.setHeader(pullArrowHeader);
         layoutPanel.add(pullPanel);
-        
+
         taskList = new CellList<TaskSummary>(new BasicCell<TaskSummary>() {
             @Override
             public String getDisplayString(TaskSummary model) {
@@ -54,20 +55,20 @@ public class TaskListViewGwtImpl implements TaskListView {
         return newTaskButton;
     }
 
-	@Override
-	public HasRefresh getPullPanel() {
-		return pullPanel;
-	}
+    @Override
+    public HasRefresh getPullPanel() {
+        return pullPanel;
+    }
 
-	@Override
-	public void setHeaderPullHandler(PullPanel.Pullhandler pullHandler) {
-		pullPanel.setHeaderPullhandler(pullHandler);
-	}
+    @Override
+    public void setHeaderPullHandler(PullPanel.Pullhandler pullHandler) {
+        pullPanel.setHeaderPullhandler(pullHandler);
+    }
 
-	@Override
-	public PullArrowWidget getPullHeader() {
-		return pullArrowHeader;
-	}
+    @Override
+    public PullArrowWidget getPullHeader() {
+        return pullArrowHeader;
+    }
 
     @Override
     public Widget asWidget() {

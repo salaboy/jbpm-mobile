@@ -36,8 +36,6 @@ public class ShowcaseEntryPoint {
     @Inject
     private TaskListPresenter taskListPresenter;
 
-//    @Inject
-//    private Identity identity;
     
     @AfterInitialization
     public void startApp() {

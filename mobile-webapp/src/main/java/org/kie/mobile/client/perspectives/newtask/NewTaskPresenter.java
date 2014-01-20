@@ -1,7 +1,10 @@
 package org.kie.mobile.client.perspectives.newtask;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.Animation;
@@ -18,14 +21,26 @@ import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
 import org.kie.mobile.client.perspectives.tasklist.TaskListPresenter;
+import org.uberfire.security.Identity;
 
 /**
  *
  * @author livthomas
+ * @author salaboy
  */
 @Dependent
 public class NewTaskPresenter {
 
+    public interface NewTaskView extends IsWidget {
+	
+	HasText getTaskNameTextBox();
+	
+	HasTapHandlers getAddTaskButton();
+	
+	HasTapHandlers getCancelButton();
+
+    }
+    
     @Inject
     private Caller<TaskServiceEntryPoint> taskServices;
 
@@ -34,6 +49,9 @@ public class NewTaskPresenter {
 
     @Inject
     private TaskListPresenter taskListPresenter;
+    
+    @Inject
+    private Identity identity;
 
     @AfterInitialization
     public void init() {
@@ -41,9 +59,11 @@ public class NewTaskPresenter {
             @Override
             public void onTap(TapEvent event) {
                 List<String> users = new ArrayList<String>();
-                users.add("john");
+                users.add(identity.getName());
+                GWT.log(identity.getName());
                 List<String> groups = new ArrayList<String>();
                 long time = new Date().getTime();
+                
                 addTask(users, groups, view.getTaskNameTextBox().getText(), 1, true, time, 30000);
 
                 view.getTaskNameTextBox().setText("");
@@ -97,7 +117,6 @@ public class NewTaskPresenter {
         taskServices.call(new RemoteCallback<Long>() {
             @Override
             public void callback(Long taskId) {
-                GWT.log("NEW TASK ID:!!! " + taskId);
                 taskListPresenter.refresh();
             }
         }).addTask(str, null, templateVars);
