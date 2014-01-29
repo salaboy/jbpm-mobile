@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 JBoss Inc
+ * Copyright 2014 JBoss Inc
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,14 +28,12 @@ import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import javax.inject.Inject;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
-import org.kie.mobile.client.perspectives.tasklist.TaskListPresenter;
 
 @EntryPoint
 public class ShowcaseEntryPoint {
     
     @Inject
-    private TaskListPresenter taskListPresenter;
-
+    private ClientFactory clientFactory;
     
     @AfterInitialization
     public void startApp() {
@@ -66,7 +64,7 @@ public class ShowcaseEntryPoint {
         RootPanel.get().add(animationHelper);
 
         //animate
-        animationHelper.goTo(taskListPresenter.getView(), Animation.SLIDE);
+        animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE);
     }
 
     //Fade out the "Loading application" pop-up

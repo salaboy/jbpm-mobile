@@ -20,7 +20,7 @@ import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
-import org.kie.mobile.client.perspectives.tasklist.TaskListPresenter;
+import org.kie.mobile.client.ClientFactory;
 import org.uberfire.security.Identity;
 
 /**
@@ -48,7 +48,7 @@ public class NewTaskPresenter {
     private NewTaskView view;
 
     @Inject
-    private TaskListPresenter taskListPresenter;
+    private ClientFactory clientFactory;
     
     @Inject
     private Identity identity;
@@ -70,7 +70,7 @@ public class NewTaskPresenter {
                 AnimationHelper animationHelper = new AnimationHelper();
                 RootPanel.get().clear();
                 RootPanel.get().add(animationHelper);
-                animationHelper.goTo(taskListPresenter.getView(), Animation.SLIDE_REVERSE);
+                animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE_REVERSE);
             }
         });
 
@@ -81,7 +81,7 @@ public class NewTaskPresenter {
                 AnimationHelper animationHelper = new AnimationHelper();
                 RootPanel.get().clear();
                 RootPanel.get().add(animationHelper);
-                animationHelper.goTo(taskListPresenter.getView(), Animation.SLIDE_REVERSE);
+                animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE_REVERSE);
             }
         });
     }
@@ -117,7 +117,7 @@ public class NewTaskPresenter {
         taskServices.call(new RemoteCallback<Long>() {
             @Override
             public void callback(Long taskId) {
-                taskListPresenter.refresh();
+                clientFactory.getTaskListPresenter().refresh();
             }
         }).addTask(str, null, templateVars);
     }

@@ -22,7 +22,7 @@ import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.ht.model.TaskSummary;
 import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
-import org.kie.mobile.client.perspectives.newtask.NewTaskPresenter;
+import org.kie.mobile.client.ClientFactory;
 import org.uberfire.security.Identity;
 
 /**
@@ -54,7 +54,7 @@ public class TaskListPresenter {
     private TaskListView view;
 
     @Inject
-    private NewTaskPresenter newTaskPresenter;
+    private ClientFactory clientFactory;
 
     @Inject
     private Identity identity;
@@ -69,7 +69,7 @@ public class TaskListPresenter {
                 AnimationHelper animationHelper = new AnimationHelper();
                 RootPanel.get().clear();
                 RootPanel.get().add(animationHelper);
-                animationHelper.goTo(newTaskPresenter.getView(), Animation.SLIDE);
+                animationHelper.goTo(clientFactory.getNewTaskPresenter().getView(), Animation.SLIDE);
             }
         });
 
