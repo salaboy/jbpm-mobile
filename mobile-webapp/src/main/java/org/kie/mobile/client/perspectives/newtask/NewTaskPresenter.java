@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014 JBoss by Red Hat.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.kie.mobile.client.perspectives.newtask;
 
 import com.google.gwt.core.client.GWT;
@@ -16,12 +32,9 @@ import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
-import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
-import org.kie.mobile.client.ClientFactory;
-import org.uberfire.security.Identity;
+import org.kie.mobile.client.perspectives.AbstractTaskPresenter;
 
 /**
  *
@@ -29,7 +42,7 @@ import org.uberfire.security.Identity;
  * @author salaboy
  */
 @Dependent
-public class NewTaskPresenter {
+public class NewTaskPresenter extends AbstractTaskPresenter {
 
     public interface NewTaskView extends IsWidget {
 	
@@ -42,16 +55,11 @@ public class NewTaskPresenter {
     }
     
     @Inject
-    private Caller<TaskServiceEntryPoint> taskServices;
-
-    @Inject
     private NewTaskView view;
 
-    @Inject
-    private ClientFactory clientFactory;
-    
-    @Inject
-    private Identity identity;
+    public NewTaskView getView() {
+        return view;
+    }
 
     @AfterInitialization
     public void init() {
@@ -120,10 +128,6 @@ public class NewTaskPresenter {
                 clientFactory.getTaskListPresenter().refresh();
             }
         }).addTask(str, null, templateVars);
-    }
-
-    public NewTaskView getView() {
-        return view;
     }
 
 }
