@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kie.mobile.backend.server.impl;
+package org.kie.mobile.server.impl;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -33,23 +33,36 @@ import org.kie.api.task.UserGroupCallback;
 import org.kie.internal.task.api.UserInfo;
 
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
+import org.uberfire.backend.server.io.IOSecurityAuth;
+import org.uberfire.backend.server.io.IOSecurityAuthz;
 import org.uberfire.commons.cluster.ClusterServiceFactory;
 import org.uberfire.commons.services.cdi.Startup;
-import org.uberfire.commons.services.cdi.StartupType;
 import org.uberfire.io.IOService;
 import org.uberfire.io.impl.IOServiceDotFileImpl;
 import org.uberfire.io.impl.cluster.IOServiceClusterImpl;
+import org.uberfire.security.auth.AuthenticationManager;
+import org.uberfire.security.authz.AuthorizationManager;
+import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
+import org.uberfire.security.server.cdi.SecurityFactory;
 
-@Startup(StartupType.BOOTSTRAP)
+
 @ApplicationScoped
-public class ApplicationScopedProducer {
+@Startup
+/**
+ * This class should contain all ApplicationScoped producers required by the application.
+ */
+public class ApplicationScopedProvider {
 
     @Inject
-    IOWatchServiceNonDotImpl watchService;
+    @IOSecurityAuth
+    private AuthenticationManager authenticationManager;
 
-//    @Inject
-//    @Named("debug")
-//    ResourceUpdateDebugger debug;
+    @Inject
+    @IOSecurityAuthz
+    private AuthorizationManager authorizationManager;
+
+    @Inject
+    private IOWatchServiceNonDotImpl watchService;
 
     @Inject
     @Named("clusterServiceFactory")
@@ -59,19 +72,22 @@ public class ApplicationScopedProducer {
 
     @PostConstruct
     public void setup() {
+        SecurityFactory.setAuthzManager( new RuntimeAuthorizationManager() );
         if ( clusterServiceFactory == null ) {
             ioService = new IOServiceDotFileImpl( watchService );
         } else {
-            ioService = new IOServiceClusterImpl( new IOServiceDotFileImpl( watchService ), clusterServiceFactory );
+            ioService = new IOServiceClusterImpl( new IOServiceDotFileImpl( watchService ), clusterServiceFactory, false );
         }
+        ioService.setAuthenticationManager( authenticationManager );
+        ioService.setAuthorizationManager( authorizationManager );
     }
 
     @PreDestroy
-    public void onShutdown() {
+    private void cleanup() {
         ioService.dispose();
     }
-    
-     @Inject
+
+    @Inject
     @Selectable
     private UserGroupInfoProducer userGroupInfoProducer;
 

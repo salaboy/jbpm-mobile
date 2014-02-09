@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -28,7 +28,7 @@
       margin: 0;
       padding: 0;
       color: #fff;
-      background: url('<%=request.getContextPath()%>/org.kie.mobile.MobileShowcase/images/bg-login.png') repeat #1b1b1b;
+      background: url('<%=request.getContextPath()%>/images/bg-login.png') repeat #1b1b1b;
       font-size: 14px;
       text-shadow: #050505 0 -1px 0;
       font-weight: bold;
@@ -45,7 +45,7 @@
       border-bottom: solid 3px #777973;
       height: 250px;
       width: 100%;
-      background: url('<%=request.getContextPath()%>/org.kie.mobile.MobileShowcase/images/bg-login-top.png') repeat #fff;
+      background: url('<%=request.getContextPath()%>/images/bg-login-top.png') repeat #fff;
       z-index: 1;
     }
 
@@ -142,14 +142,17 @@
 
 <div id="login-wrapper" class="png_bg">
   <div id="login-top">
-    <img src="<%=request.getContextPath()%>/org.kie.mobile.MobileShowcase/images/uf_logo.png" alt="Mobile Logo" title="Powered By Uberfire"/>
+    <img src="<%=request.getContextPath()%>/images/jbpm-console-ng.png" alt="Mobile Logo" title="Powered By Uberfire"/>
   </div>
 
   <div id="login-content">
+    <c:if test="${param.message != null}">
+      <h3><c:out value="${param.message}"/></h3>
+    </c:if>
     <form action="j_security_check" method="POST">
       <p>
         <label>Username</label>
-        <input value="" name="j_username" class="text-input" type="text"/>
+        <input value="" name="j_username" class="text-input" type="text" autofocus/>
       </p>
       <br style="clear: both;"/>
 
@@ -162,6 +165,7 @@
       <p>
         <input class="button" type="submit" value="Sign In"/>
       </p>
+      
     </form>
   </div>
 </div>

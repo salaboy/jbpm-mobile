@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kie.mobile.backend.server.impl;
+package org.kie.mobile.server.impl;
 
 import java.util.Collection;
 import javax.enterprise.context.ApplicationScoped;

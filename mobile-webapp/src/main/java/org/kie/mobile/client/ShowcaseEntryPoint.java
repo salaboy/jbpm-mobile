@@ -28,12 +28,16 @@ import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import javax.inject.Inject;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
+import org.uberfire.security.Identity;
 
 @EntryPoint
 public class ShowcaseEntryPoint {
     
     @Inject
     private ClientFactory clientFactory;
+    
+    @Inject
+    private Identity identity;
     
     @AfterInitialization
     public void startApp() {
@@ -67,26 +71,24 @@ public class ShowcaseEntryPoint {
         animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE);
     }
 
-    //Fade out the "Loading application" pop-up
-    private void hideLoadingPopup() {
-        final Element e = RootPanel.get("loading").getElement();
+   private void hideLoadingPopup() {
+        final Element e = RootPanel.get( "loading" ).getElement();
 
         new com.google.gwt.animation.client.Animation() {
-
             @Override
-            protected void onUpdate(double progress) {
-                e.getStyle().setOpacity(1.0 - progress);
+            protected void onUpdate( double progress ) {
+                e.getStyle().setOpacity( 1.0 - progress );
             }
 
             @Override
             protected void onComplete() {
-                e.getStyle().setVisibility(Style.Visibility.HIDDEN);
+                e.getStyle().setVisibility( Style.Visibility.HIDDEN );
             }
-        }.run(500);
+        }.run( 500 );
     }
 
-    public static native void redirect(String url)/*-{
-     $wnd.location = url;
-     }-*/;
+    public static native void redirect( String url )/*-{
+        $wnd.location = url;
+    }-*/;
 
 }

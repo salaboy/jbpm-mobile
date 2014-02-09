@@ -1,4 +1,4 @@
-package org.kie.mobile.backend.server.impl;
+package org.kie.mobile.server.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
