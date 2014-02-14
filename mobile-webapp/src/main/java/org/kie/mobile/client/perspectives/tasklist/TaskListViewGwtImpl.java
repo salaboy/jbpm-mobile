@@ -24,6 +24,7 @@ import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.celllist.BasicCell;
+import com.googlecode.mgwt.ui.client.widget.celllist.HasCellSelectedHandler;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import org.jbpm.console.ng.ht.model.TaskSummary;
@@ -85,6 +86,11 @@ public class TaskListViewGwtImpl extends AbstractTaskView implements TaskListPre
     public void render(List<TaskSummary> tasks) {
         taskList.render(tasks);
         pullPanel.refresh();
+    }
+
+    @Override
+    public HasCellSelectedHandler getTaskList() {
+        return taskList;
     }
 
 }

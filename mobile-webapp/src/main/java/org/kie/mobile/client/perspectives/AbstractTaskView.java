@@ -22,9 +22,11 @@ import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 
 /**
  *
- * @author tlivora
+ * @author livthomas
  */
 public abstract class AbstractTaskView implements IsWidget {
+    
+    protected final String[] priorities = {"0 - High", "1", "2", "3", "4", "5 - Medium", "6", "7", "8", "9", "10 - Low"};
 
     protected final LayoutPanel layoutPanel;
 

@@ -29,6 +29,9 @@ import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
+import com.googlecode.mgwt.ui.client.widget.celllist.HasCellSelectedHandler;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.Dependent;
@@ -57,6 +60,8 @@ public class TaskListPresenter extends AbstractTaskPresenter {
         PullArrowWidget getPullHeader();
 
         void render(List<TaskSummary> tasks);
+        
+        HasCellSelectedHandler getTaskList();
 
     }
 
@@ -66,6 +71,8 @@ public class TaskListPresenter extends AbstractTaskPresenter {
     public TaskListView getView() {
         return view;
     }
+    
+    private List<TaskSummary> taskList;
 
     @AfterInitialization
     public void init() {
@@ -100,6 +107,17 @@ public class TaskListPresenter extends AbstractTaskPresenter {
             }
         });
         view.setHeaderPullHandler(headerHandler);
+        
+        view.getTaskList().addCellSelectedHandler(new CellSelectedHandler() {
+            @Override
+            public void onCellSelected(CellSelectedEvent event) {
+                AnimationHelper animationHelper = new AnimationHelper();
+                RootPanel.get().clear();
+                RootPanel.get().add(animationHelper);
+                animationHelper.goTo(clientFactory.getTaskDetailsPresenter().getView(taskList.get(event.getIndex())), 
+                        Animation.SLIDE);
+            }
+        });
 
         refresh();
     }
@@ -118,7 +136,8 @@ public class TaskListPresenter extends AbstractTaskPresenter {
         status.add("Completed");
         taskServices.call(new RemoteCallback<List<TaskSummary>>() {
             @Override
-            public void callback(List<TaskSummary> taskList) {
+            public void callback(List<TaskSummary> tasks) {
+                taskList = tasks;
                 view.render(taskList);
             }
         }).getTasksAssignedAsPotentialOwnerByExpirationDateOptional(identity.getName(), status, null, "en-UK");
