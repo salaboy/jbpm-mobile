@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives.newtask;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
@@ -25,6 +24,10 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
+import com.googlecode.mgwt.ui.client.widget.MDateBox.DateParser;
+import com.googlecode.mgwt.ui.client.widget.MDateBox.DateRenderer;
+import com.googlecode.mgwt.ui.client.widget.MListBox;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,15 +48,25 @@ import org.kie.mobile.client.perspectives.AbstractTaskPresenter;
 public class NewTaskPresenter extends AbstractTaskPresenter {
 
     public interface NewTaskView extends IsWidget {
-	
-	HasText getTaskNameTextBox();
-	
-	HasTapHandlers getAddTaskButton();
-	
-	HasTapHandlers getCancelButton();
+
+        HasText getTaskNameTextBox();
+
+        HasValue<Boolean> getAssignToMeCheckBox();
+
+        HasText getDueOnDateBox();
+
+        MListBox getPriorityListBox();
+
+        HasText getUserTextBox();
+
+        HasTapHandlers getAddTaskButton();
+
+        HasTapHandlers getCancelButton();
+
+        void displayNotification(String title, String text);
 
     }
-    
+
     @Inject
     private NewTaskView view;
 
@@ -63,22 +76,37 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
 
     @AfterInitialization
     public void init() {
+        view.getAssignToMeCheckBox().setValue(false);
+        view.getDueOnDateBox().setText(new DateRenderer().render(new Date()));
+        view.getUserTextBox().setText(identity.getName());
+        
         view.getAddTaskButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
-                List<String> users = new ArrayList<String>();
-                users.add(identity.getName());
-                GWT.log(identity.getName());
-                List<String> groups = new ArrayList<String>();
-                long time = new Date().getTime();
-                
-                addTask(users, groups, view.getTaskNameTextBox().getText(), 1, true, time, 30000);
+                try {
+                    List<String> users = new ArrayList<String>();
+                    users.add(view.getUserTextBox().getText());
+                    List<String> groups = new ArrayList<String>();
+                    String taskName = view.getTaskNameTextBox().getText();
+                    int priority = view.getPriorityListBox().getSelectedIndex();
+                    boolean assignToMe = view.getAssignToMeCheckBox().getValue();
+                    long date = new DateParser().parse(view.getDueOnDateBox().getText()).getTime();
+                    long time = 0;
 
-                view.getTaskNameTextBox().setText("");
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE_REVERSE);
+                    addTask(users, groups, taskName, priority, assignToMe, date, time);
+
+                    view.getTaskNameTextBox().setText("");
+                    view.getPriorityListBox().setSelectedIndex(0);
+                    view.getAssignToMeCheckBox().setValue(false);
+                    view.getDueOnDateBox().setText(new DateRenderer().render(new Date()));
+
+                    AnimationHelper animationHelper = new AnimationHelper();
+                    RootPanel.get().clear();
+                    RootPanel.get().add(animationHelper);
+                    animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE_REVERSE);
+                } catch (ParseException ex) {
+                    view.displayNotification("Wrong date format", "Enter the date in the correct format!");
+                }
             }
         });
 

@@ -105,6 +105,7 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
         
         processInstanceIdTextBox.setReadOnly(true);
         processDefinitionIdTextBox.setReadOnly(true);
+        processInstanceDetailsButton.setSmall(true);
         
         WidgetList processContextForm = new WidgetList();
 		processContextForm.setRound(true);

@@ -17,9 +17,17 @@
 package org.kie.mobile.client.perspectives.newtask;
 
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
+import com.googlecode.mgwt.ui.client.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.Button;
+import com.googlecode.mgwt.ui.client.widget.FormListEntry;
+import com.googlecode.mgwt.ui.client.widget.MCheckBox;
+import com.googlecode.mgwt.ui.client.widget.MDateBox;
+import com.googlecode.mgwt.ui.client.widget.MListBox;
 import com.googlecode.mgwt.ui.client.widget.MTextBox;
+import com.googlecode.mgwt.ui.client.widget.RoundPanel;
+import com.googlecode.mgwt.ui.client.widget.WidgetList;
 import javax.enterprise.context.ApplicationScoped;
 import org.kie.mobile.client.perspectives.AbstractTaskView;
 
@@ -31,21 +39,44 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
 @ApplicationScoped
 public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPresenter.NewTaskView {
 
-    private final MTextBox taskNameTextBox;
+    private final MTextBox taskNameTextBox = new MTextBox();
+    
+    private final MCheckBox assignToMeCheckBox = new MCheckBox();
+    
+    private final MDateBox dueOnDateBox = new MDateBox();
+    
+    private final MListBox priorityListBox = new MListBox();
+    
+    private final MTextBox userTextBox = new MTextBox();
+    
     private final Button addTaskButton;
+    
     private final Button cancelButton;
 
     public NewTaskViewGwtImpl() {
-        taskNameTextBox = new MTextBox();
-        taskNameTextBox.setPlaceHolder("Task name");
-        layoutPanel.add(taskNameTextBox);
+        RoundPanel newTaskPanel = new RoundPanel();
+        
+        for (String priority : priorities) {
+            priorityListBox.addItem(priority);
+        }
+        
+        WidgetList newTaskForm = new WidgetList();
+		newTaskForm.setRound(true);
+		newTaskForm.add(new FormListEntry("Task Name", taskNameTextBox));
+		newTaskForm.add(new FormListEntry("Auto Assign To Me", assignToMeCheckBox));
+		newTaskForm.add(new FormListEntry("Due On", dueOnDateBox));
+		newTaskForm.add(new FormListEntry("Priority", priorityListBox));
+		newTaskForm.add(new FormListEntry("User", userTextBox));
+        newTaskPanel.add(newTaskForm);
 
         addTaskButton = new Button("Add");
         addTaskButton.setConfirm(true);
-        layoutPanel.add(addTaskButton);
+        newTaskPanel.add(addTaskButton);
 
         cancelButton = new Button("Cancel");
-        layoutPanel.add(cancelButton);
+        newTaskPanel.add(cancelButton);
+        
+        layoutPanel.add(newTaskPanel);
     }
 
     @Override
@@ -61,6 +92,31 @@ public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPrese
     @Override
     public HasTapHandlers getCancelButton() {
         return cancelButton;
+    }
+
+    @Override
+    public HasValue<Boolean> getAssignToMeCheckBox() {
+        return assignToMeCheckBox;
+    }
+
+    @Override
+    public HasText getDueOnDateBox() {
+        return dueOnDateBox;
+    }
+
+    @Override
+    public MListBox getPriorityListBox() {
+        return priorityListBox;
+    }
+
+    @Override
+    public HasText getUserTextBox() {
+        return userTextBox;
+    }
+
+    @Override
+    public void displayNotification(String title, String text) {
+        Dialogs.alert(title, text, null);
     }
 
 }
