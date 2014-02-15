@@ -16,6 +16,8 @@
 
 package org.kie.mobile.client.perspectives;
 
+import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import javax.inject.Inject;
 import org.jboss.errai.common.client.api.Caller;
 import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
@@ -27,6 +29,14 @@ import org.uberfire.security.Identity;
  * @author tlivora
  */
 public abstract class AbstractTaskPresenter {
+    
+    public interface TaskView extends IsWidget {
+
+        void displayNotification(String title, String text);
+        
+        HasTapHandlers getBackButton();
+        
+    }
     
     @Inject
     protected Caller<TaskServiceEntryPoint> taskServices;

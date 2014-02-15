@@ -18,7 +18,6 @@ package org.kie.mobile.client.perspectives.tasklist;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -49,7 +48,7 @@ import org.kie.mobile.client.perspectives.AbstractTaskPresenter;
 @Dependent
 public class TaskListPresenter extends AbstractTaskPresenter {
 
-    public interface TaskListView extends IsWidget {
+    public interface TaskListView extends TaskView {
 
         HasTapHandlers getNewTaskButton();
 

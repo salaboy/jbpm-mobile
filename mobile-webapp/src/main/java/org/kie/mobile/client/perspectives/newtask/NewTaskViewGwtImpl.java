@@ -27,6 +27,7 @@ import com.googlecode.mgwt.ui.client.widget.MDateBox;
 import com.googlecode.mgwt.ui.client.widget.MListBox;
 import com.googlecode.mgwt.ui.client.widget.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.RoundPanel;
+import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.WidgetList;
 import javax.enterprise.context.ApplicationScoped;
 import org.kie.mobile.client.perspectives.AbstractTaskView;
@@ -50,10 +51,13 @@ public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPrese
     private final MTextBox userTextBox = new MTextBox();
     
     private final Button addTaskButton;
-    
-    private final Button cancelButton;
 
     public NewTaskViewGwtImpl() {
+        title.setHTML("New Task");
+        
+        ScrollPanel scrollPanel = new ScrollPanel();
+        layoutPanel.add(scrollPanel);
+        
         RoundPanel newTaskPanel = new RoundPanel();
         
         for (String priority : priorities) {
@@ -72,11 +76,8 @@ public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPrese
         addTaskButton = new Button("Add");
         addTaskButton.setConfirm(true);
         newTaskPanel.add(addTaskButton);
-
-        cancelButton = new Button("Cancel");
-        newTaskPanel.add(cancelButton);
         
-        layoutPanel.add(newTaskPanel);
+        scrollPanel.add(newTaskPanel);
     }
 
     @Override
@@ -87,11 +88,6 @@ public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPrese
     @Override
     public HasTapHandlers getAddTaskButton() {
         return addTaskButton;
-    }
-
-    @Override
-    public HasTapHandlers getCancelButton() {
-        return cancelButton;
     }
 
     @Override
@@ -112,11 +108,6 @@ public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPrese
     @Override
     public HasText getUserTextBox() {
         return userTextBox;
-    }
-
-    @Override
-    public void displayNotification(String title, String text) {
-        Dialogs.alert(title, text, null);
     }
 
 }

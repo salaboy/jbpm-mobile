@@ -41,8 +41,6 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
  */
 @ApplicationScoped
 public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDetailsPresenter.TaskDetailsView {
-
-    private final Button cancelButton;
     
     private final MTextArea descriptionTextArea = new MTextArea();
     
@@ -60,21 +58,20 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
     
     private final Button processInstanceDetailsButton = new Button("Process Instance Details");
     
-    private final Button updateButton = new Button("Update");
+    private final Button updateButton;
     
     private final Label potentialOwnersLabel = new Label();
     
     private final MTextBox delegateTextBox = new MTextBox();
     
-    private final Button delegateButton = new Button("Delegate");
+    private final Button delegateButton;
 
     public TaskDetailsViewGwtImpl() {
+        title.setHTML("Task Details");
+        
         TabPanel tabPanel = new TabPanel();
         tabPanel.setDisplayTabBarOnTop(true);
         layoutPanel.add(tabPanel);
-
-        cancelButton = new Button("Cancel");
-        layoutPanel.add(cancelButton);
         
         // Work tab
         
@@ -114,6 +111,8 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
 		processContextForm.add(new FormListEntry("Process Instance Details", processInstanceDetailsButton));
         detailsPanel.add(processContextForm);
         
+        updateButton = new Button("Update");
+        updateButton.setConfirm(true);
         detailsPanel.add(updateButton);
         
         TabBarButton detailsTabButton = new TabBarButton(null);
@@ -130,6 +129,8 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
         assignmentsForm.add(new FormListEntry("User or Group", delegateTextBox));
         assignmentsPanel.add(assignmentsForm);
         
+        delegateButton = new Button("Delegate");
+        delegateButton.setConfirm(true);
         assignmentsPanel.add(delegateButton);
         
         TabBarButton assignmentsTabButton = new TabBarButton(null);
@@ -145,11 +146,6 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
         tabPanel.add(commentsTabButton, commentsPanel);
         
         tabPanel.setSelectedChild(1);
-    }
-
-    @Override
-    public HasTapHandlers getCancelButton() {
-        return cancelButton;
     }
 
     @Override
@@ -191,11 +187,6 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
     @Override
     public MListBox getPriorityListBox() {
         return priorityListBox;
-    }
-
-    @Override
-    public void displayNotification(String title, String text) {
-        Dialogs.alert(title, text, null);
     }
 
     @Override

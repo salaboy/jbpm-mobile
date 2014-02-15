@@ -17,7 +17,6 @@ package org.kie.mobile.client.perspectives.newtask;
 
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -47,7 +46,7 @@ import org.kie.mobile.client.perspectives.AbstractTaskPresenter;
 @Dependent
 public class NewTaskPresenter extends AbstractTaskPresenter {
 
-    public interface NewTaskView extends IsWidget {
+    public interface NewTaskView extends TaskView {
 
         HasText getTaskNameTextBox();
 
@@ -60,10 +59,6 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
         HasText getUserTextBox();
 
         HasTapHandlers getAddTaskButton();
-
-        HasTapHandlers getCancelButton();
-
-        void displayNotification(String title, String text);
 
     }
 
@@ -110,7 +105,7 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
             }
         });
 
-        view.getCancelButton().addTapHandler(new TapHandler() {
+        view.getBackButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
                 view.getTaskNameTextBox().setText("");
