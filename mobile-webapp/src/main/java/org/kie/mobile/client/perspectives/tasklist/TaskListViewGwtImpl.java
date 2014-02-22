@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives.tasklist;
 
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
-import com.googlecode.mgwt.ui.client.widget.Button;
 import com.googlecode.mgwt.ui.client.widget.CellList;
+import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowHeader;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
@@ -38,7 +37,7 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
 @ApplicationScoped
 public class TaskListViewGwtImpl extends AbstractTaskView implements TaskListPresenter.TaskListView {
 
-    private final Button newTaskButton;
+    private final HeaderButton newTaskButton;
 
     private PullPanel pullPanel;
     private PullArrowHeader pullArrowHeader;
@@ -47,9 +46,10 @@ public class TaskListViewGwtImpl extends AbstractTaskView implements TaskListPre
     public TaskListViewGwtImpl() {
         title.setHTML("Task List");
         headerBackButton.setVisible(false);
-        
-        newTaskButton = new Button("New task");
-        layoutPanel.add(newTaskButton);
+
+        newTaskButton = new HeaderButton();
+        newTaskButton.setText("New task");
+        headerPanel.setRightWidget(newTaskButton);
 
         pullPanel = new PullPanel();
         pullArrowHeader = new PullArrowHeader();
