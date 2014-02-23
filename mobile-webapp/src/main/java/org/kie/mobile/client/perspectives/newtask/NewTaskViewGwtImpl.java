@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives.newtask;
 
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
-import com.googlecode.mgwt.ui.client.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.Button;
 import com.googlecode.mgwt.ui.client.widget.FormListEntry;
 import com.googlecode.mgwt.ui.client.widget.MCheckBox;
@@ -41,42 +39,42 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
 public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPresenter.NewTaskView {
 
     private final MTextBox taskNameTextBox = new MTextBox();
-    
+
     private final MCheckBox assignToMeCheckBox = new MCheckBox();
-    
+
     private final MDateBox dueOnDateBox = new MDateBox();
-    
+
     private final MListBox priorityListBox = new MListBox();
-    
+
     private final MTextBox userTextBox = new MTextBox();
-    
+
     private final Button addTaskButton;
 
     public NewTaskViewGwtImpl() {
         title.setHTML("New Task");
-        
+
         ScrollPanel scrollPanel = new ScrollPanel();
         layoutPanel.add(scrollPanel);
-        
+
         RoundPanel newTaskPanel = new RoundPanel();
-        
+
         for (String priority : priorities) {
             priorityListBox.addItem(priority);
         }
-        
+
         WidgetList newTaskForm = new WidgetList();
-		newTaskForm.setRound(true);
-		newTaskForm.add(new FormListEntry("Task Name", taskNameTextBox));
-		newTaskForm.add(new FormListEntry("Auto Assign To Me", assignToMeCheckBox));
-		newTaskForm.add(new FormListEntry("Due On", dueOnDateBox));
-		newTaskForm.add(new FormListEntry("Priority", priorityListBox));
-		newTaskForm.add(new FormListEntry("User", userTextBox));
+        newTaskForm.setRound(true);
+        newTaskForm.add(new FormListEntry("Task Name", taskNameTextBox));
+        newTaskForm.add(new FormListEntry("Auto Assign To Me", assignToMeCheckBox));
+        newTaskForm.add(new FormListEntry("Due On", dueOnDateBox));
+        newTaskForm.add(new FormListEntry("Priority", priorityListBox));
+        newTaskForm.add(new FormListEntry("User", userTextBox));
         newTaskPanel.add(newTaskForm);
 
         addTaskButton = new Button("Add");
         addTaskButton.setConfirm(true);
         newTaskPanel.add(addTaskButton);
-        
+
         scrollPanel.add(newTaskPanel);
     }
 

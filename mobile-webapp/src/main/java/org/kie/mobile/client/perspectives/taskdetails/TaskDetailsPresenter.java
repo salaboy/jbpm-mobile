@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives.taskdetails;
 
 import com.google.gwt.user.client.ui.HasText;
@@ -28,9 +27,13 @@ import com.googlecode.mgwt.ui.client.widget.MListBox;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import org.jboss.errai.bus.client.api.messaging.Message;
+import org.jboss.errai.common.client.api.ErrorCallback;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.ht.model.TaskSummary;
@@ -46,6 +49,16 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
     public interface TaskDetailsView extends TaskView {
 
         void refreshTask(TaskSummary task);
+
+        HasTapHandlers getSaveButton();
+
+        HasTapHandlers getReleaseButton();
+
+        HasTapHandlers getClaimButton();
+
+        HasTapHandlers getStartButton();
+
+        HasTapHandlers getCompleteButton();
 
         HasText getDescriptionTextArea();
 
@@ -71,6 +84,75 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
         view.refreshTask(task);
         return view;
     }
+    
+    private void saveTask() {
+        // TODO with forms
+    }
+
+    private void releaseTask() {
+        taskServices.call(new RemoteCallback<Void>() {
+            @Override
+            public void callback(Void nothing) {
+                view.displayNotification("Success", "Task with id = " + task.getId() + " was released!");
+                // TODO refresh task and buttons
+            }
+        }, new ErrorCallback<Message>() {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+                return true;
+            }
+        }).release(task.getId(), identity.getName());
+    }
+
+    private void claimTask() {
+        taskServices.call(new RemoteCallback<Void>() {
+            @Override
+            public void callback(Void nothing) {
+                view.displayNotification("Success", "Task with id = " + task.getId() + " was claimed!");
+                // TODO refresh task and buttons
+            }
+        }, new ErrorCallback<Message>() {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+                return true;
+            }
+        }).claim(task.getId(), identity.getName());
+    }
+    
+    private void startTask() {
+        taskServices.call( new RemoteCallback<Void>() {
+            @Override
+            public void callback( Void nothing ) {
+                view.displayNotification("Success", "Task with id = " + task.getId() + " was started!" );
+                // TODO refresh task and buttons
+            }
+        }, new ErrorCallback<Message>() {
+           @Override
+           public boolean error( Message message, Throwable throwable ) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+               return true;
+           }
+       } ).start(task.getId(), identity.getName());
+    }
+
+    private void completeTask() {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        taskServices.call(new RemoteCallback<Void>() {
+            @Override
+            public void callback(Void nothing) {
+                view.displayNotification("Success", "Task with id = " + task.getId() + " was completed!");
+                // TODO refresh task and buttons
+            }
+        }, new ErrorCallback<Message>() {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+                return true;
+            }
+        }).complete(task.getId(), identity.getName(), params);
+    }
 
     private void updateTask(String description, Date dueDate, int priority) {
         List<String> descriptions = new ArrayList<String>();
@@ -82,7 +164,14 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
         taskServices.call(new RemoteCallback<Void>() {
             @Override
             public void callback(Void response) {
-                view.displayNotification("Success", "Task details has been updated for the task with id = " + task.getId());
+                view.displayNotification("Success", "Task details has been updated for the task with id = "
+                        + task.getId());
+            }
+        }, new ErrorCallback<Message>() {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+                return true;
             }
         }).updateSimpleTaskDetails(task.getId(), names, priority, descriptions, dueDate);
     }
@@ -92,7 +181,13 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             @Override
             public void callback(Void nothing) {
                 view.displayNotification("Success", "Task was succesfully delegated");
-                // refresh potential owners and disable delegate button
+                // TODO refresh potential owners and disable delegate button
+            }
+        }, new ErrorCallback<Message>() {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+                return true;
             }
         }).delegate(task.getId(), identity.getName(), entity);
     }
@@ -109,6 +204,41 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             }
         });
 
+        view.getSaveButton().addTapHandler(new TapHandler() {
+            @Override
+            public void onTap(TapEvent event) {
+                saveTask();
+            }
+        });
+
+        view.getReleaseButton().addTapHandler(new TapHandler() {
+            @Override
+            public void onTap(TapEvent event) {
+                releaseTask();
+            }
+        });
+
+        view.getClaimButton().addTapHandler(new TapHandler() {
+            @Override
+            public void onTap(TapEvent event) {
+                claimTask();
+            }
+        });
+
+        view.getStartButton().addTapHandler(new TapHandler() {
+            @Override
+            public void onTap(TapEvent event) {
+                startTask();
+            }
+        });
+
+        view.getCompleteButton().addTapHandler(new TapHandler() {
+            @Override
+            public void onTap(TapEvent event) {
+                completeTask();
+            }
+        });
+
         view.getUpdateButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
@@ -120,7 +250,7 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
                 }
             }
         });
-        
+
         view.getDelegateButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {

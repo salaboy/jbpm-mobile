@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives;
 
 import com.google.gwt.user.client.ui.IsWidget;
@@ -29,22 +28,22 @@ import org.uberfire.security.Identity;
  * @author tlivora
  */
 public abstract class AbstractTaskPresenter {
-    
+
     public interface TaskView extends IsWidget {
 
         void displayNotification(String title, String text);
-        
+
         HasTapHandlers getBackButton();
-        
+
     }
-    
+
     @Inject
     protected Caller<TaskServiceEntryPoint> taskServices;
 
     @Inject
     protected ClientFactory clientFactory;
-    
+
     @Inject
     protected Identity identity;
-    
+
 }

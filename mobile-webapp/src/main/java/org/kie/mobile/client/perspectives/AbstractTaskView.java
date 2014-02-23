@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives;
 
 import com.google.gwt.user.client.ui.HTML;
@@ -30,28 +29,31 @@ import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
  * @author livthomas
  */
 public abstract class AbstractTaskView implements AbstractTaskPresenter.TaskView {
-    
+
     protected final String[] priorities = {"0 - High", "1", "2", "3", "4", "5 - Medium", "6", "7", "8", "9", "10 - Low"};
 
     protected final LayoutPanel layoutPanel;
-	protected HeaderPanel headerPanel;
-	protected HeaderButton headerBackButton;
-	protected HTML title;
+
+    protected final HeaderPanel headerPanel;
+
+    protected final HeaderButton headerBackButton;
+
+    protected final HTML title;
 
     public AbstractTaskView() {
         layoutPanel = new LayoutPanel();
+        headerPanel = new HeaderPanel();
 
-		headerPanel = new HeaderPanel();
-		title = new HTML();
-		headerPanel.setCenterWidget(title);
-		headerBackButton = new HeaderButton();
-		headerBackButton.setBackButton(true);
+        title = new HTML();
+        headerPanel.setCenterWidget(title);
+
+        headerBackButton = new HeaderButton();
+        headerBackButton.setBackButton(true);
         headerBackButton.setText("Back");
-		headerBackButton.setVisible(!MGWT.getOsDetection().isAndroid());
+        headerBackButton.setVisible(!MGWT.getOsDetection().isAndroid());
+        headerPanel.setLeftWidget(headerBackButton);
 
-		headerPanel.setLeftWidget(headerBackButton);
-
-		layoutPanel.add(headerPanel);
+        layoutPanel.add(headerPanel);
     }
 
     @Override
@@ -68,5 +70,5 @@ public abstract class AbstractTaskView implements AbstractTaskPresenter.TaskView
     public HasTapHandlers getBackButton() {
         return headerBackButton;
     }
-    
+
 }

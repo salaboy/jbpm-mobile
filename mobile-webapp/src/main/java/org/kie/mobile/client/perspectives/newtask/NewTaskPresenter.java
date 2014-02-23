@@ -74,7 +74,7 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
         view.getAssignToMeCheckBox().setValue(false);
         view.getDueOnDateBox().setText(new DateRenderer().render(new Date()));
         view.getUserTextBox().setText(identity.getName());
-        
+
         view.getAddTaskButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {

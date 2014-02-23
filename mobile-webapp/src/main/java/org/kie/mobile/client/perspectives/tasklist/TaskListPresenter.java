@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.client.perspectives.tasklist;
 
 import com.google.gwt.user.client.Timer;
@@ -59,7 +58,7 @@ public class TaskListPresenter extends AbstractTaskPresenter {
         PullArrowWidget getPullHeader();
 
         void render(List<TaskSummary> tasks);
-        
+
         HasCellSelectedHandler getTaskList();
 
     }
@@ -70,7 +69,7 @@ public class TaskListPresenter extends AbstractTaskPresenter {
     public TaskListView getView() {
         return view;
     }
-    
+
     private List<TaskSummary> taskList;
 
     @AfterInitialization
@@ -106,14 +105,14 @@ public class TaskListPresenter extends AbstractTaskPresenter {
             }
         });
         view.setHeaderPullHandler(headerHandler);
-        
+
         view.getTaskList().addCellSelectedHandler(new CellSelectedHandler() {
             @Override
             public void onCellSelected(CellSelectedEvent event) {
                 AnimationHelper animationHelper = new AnimationHelper();
                 RootPanel.get().clear();
                 RootPanel.get().add(animationHelper);
-                animationHelper.goTo(clientFactory.getTaskDetailsPresenter().getView(taskList.get(event.getIndex())), 
+                animationHelper.goTo(clientFactory.getTaskDetailsPresenter().getView(taskList.get(event.getIndex())),
                         Animation.SLIDE);
             }
         });
