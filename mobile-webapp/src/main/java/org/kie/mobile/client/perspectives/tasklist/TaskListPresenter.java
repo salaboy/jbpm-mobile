@@ -38,6 +38,7 @@ import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.ht.model.TaskSummary;
 import org.kie.mobile.client.perspectives.AbstractTaskPresenter;
+import org.kie.mobile.client.utils.TaskStatus;
 
 /**
  *
@@ -67,6 +68,7 @@ public class TaskListPresenter extends AbstractTaskPresenter {
     private TaskListView view;
 
     public TaskListView getView() {
+        refresh();
         return view;
     }
 
@@ -121,24 +123,17 @@ public class TaskListPresenter extends AbstractTaskPresenter {
     }
 
     public void refresh() {
-        List<String> status = new ArrayList<String>();
-        status.add("Created");
-        status.add("Ready");
-        status.add("Reserved");
-        status.add("InProgress");
-        status.add("Suspended");
-        status.add("Failed");
-        status.add("Error");
-        status.add("Exited");
-        status.add("Obsolete");
-        status.add("Completed");
+        List<String> statuses = new ArrayList<String>();
+        for (TaskStatus status : TaskStatus.values()) {
+            statuses.add(status.toString());
+        }
         taskServices.call(new RemoteCallback<List<TaskSummary>>() {
             @Override
             public void callback(List<TaskSummary> tasks) {
                 taskList = tasks;
                 view.render(taskList);
             }
-        }).getTasksAssignedAsPotentialOwnerByExpirationDateOptional(identity.getName(), status, null, "en-UK");
+        }).getTasksAssignedAsPotentialOwnerByExpirationDateOptional(identity.getName(), statuses, null, "en-UK");
     }
 
 }

@@ -32,6 +32,7 @@ import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import javax.enterprise.context.ApplicationScoped;
 import org.jbpm.console.ng.ht.model.TaskSummary;
 import org.kie.mobile.client.perspectives.AbstractTaskView;
+import org.kie.mobile.client.utils.TaskStatus;
 
 /**
  *
@@ -39,7 +40,7 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
  */
 @ApplicationScoped
 public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDetailsPresenter.TaskDetailsView {
-    
+
     private final Button saveButton;
     private final Button releaseButton;
     private final Button claimButton;
@@ -69,21 +70,21 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
 
         // Work tab
         RoundPanel workPanel = new RoundPanel();
-        
+
         saveButton = new Button("Save");
         workPanel.add(saveButton);
-        
+
         releaseButton = new Button("Release");
         workPanel.add(releaseButton);
-        
+
         claimButton = new Button("Claim");
         claimButton.setConfirm(true);
         workPanel.add(claimButton);
-        
+
         startButton = new Button("Start");
         startButton.setConfirm(true);
         workPanel.add(startButton);
-        
+
         completeButton = new Button("Complete");
         completeButton.setConfirm(true);
         workPanel.add(completeButton);
@@ -157,29 +158,37 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
     }
 
     @Override
-    public void refreshTask(TaskSummary task) {
-        if (task.getStatus().equals("Ready")) {
-            saveButton.setVisible(false);
-            releaseButton.setVisible(false);
-            claimButton.setVisible(true);
-            startButton.setVisible(false);
-            completeButton.setVisible(false);
+    public void refreshTask(TaskSummary task, boolean owned) {
+        switch (TaskStatus.valueOf(task.getStatus())) {
+            case Ready:
+                saveButton.setVisible(false);
+                releaseButton.setVisible(false);
+                claimButton.setVisible(true);
+                startButton.setVisible(false);
+                completeButton.setVisible(false);
+                break;
+            case Reserved:
+                saveButton.setVisible(false);
+                releaseButton.setVisible(true);
+                claimButton.setVisible(false);
+                startButton.setVisible(true);
+                completeButton.setVisible(false);
+                break;
+            case InProgress:
+                saveButton.setVisible(true);
+                releaseButton.setVisible(true);
+                claimButton.setVisible(false);
+                startButton.setVisible(false);
+                completeButton.setVisible(true);
+                break;
+            default:
+                saveButton.setVisible(false);
+                releaseButton.setVisible(false);
+                claimButton.setVisible(false);
+                startButton.setVisible(false);
+                completeButton.setVisible(false);
         }
-        if (task.getStatus().equals("Reserved")) {
-            saveButton.setVisible(false);
-            releaseButton.setVisible(true);
-            claimButton.setVisible(false);
-            startButton.setVisible(true);
-            completeButton.setVisible(false);
-        }
-        if (task.getStatus().equals("InProgress")) {
-            saveButton.setVisible(true);
-            releaseButton.setVisible(true);
-            claimButton.setVisible(false);
-            startButton.setVisible(false);
-            completeButton.setVisible(true);
-        }
-        
+
         descriptionTextArea.setText(task.getDescription());
         statusTextBox.setText(task.getStatus());
         dueOnDateBox.setText(new DateRenderer().render(task.getExpirationTime()));
@@ -191,13 +200,13 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
         processInstanceIdTextBox.setText(instanceId);
         processDefinitionIdTextBox.setText(definitionId);
 
-        potentialOwnersLabel.setText(task.getPotentialOwners().toString());
-        if (task.getStatus().equals("Ready")) {
-            delegateTextBox.setReadOnly(true);
-            delegateButton.setVisible(false);
-        } else {
+//        potentialOwnersLabel.setText(task.getPotentialOwners().toString());
+        if (owned) {
             delegateTextBox.setReadOnly(false);
             delegateButton.setVisible(true);
+        } else {
+            delegateTextBox.setReadOnly(true);
+            delegateButton.setVisible(false);
         }
     }
 
@@ -224,6 +233,11 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
     @Override
     public MListBox getPriorityListBox() {
         return priorityListBox;
+    }
+
+    @Override
+    public HasText getPotentialOwnersText() {
+        return potentialOwnersLabel;
     }
 
     @Override

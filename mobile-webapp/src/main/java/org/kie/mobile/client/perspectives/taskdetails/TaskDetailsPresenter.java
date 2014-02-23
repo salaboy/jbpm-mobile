@@ -48,7 +48,7 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
 
     public interface TaskDetailsView extends TaskView {
 
-        void refreshTask(TaskSummary task);
+        void refreshTask(TaskSummary task, boolean owned);
 
         HasTapHandlers getSaveButton();
 
@@ -67,6 +67,8 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
         MListBox getPriorityListBox();
 
         HasTapHandlers getUpdateButton();
+        
+        HasText getPotentialOwnersText();
 
         HasText getDelegateTextBox();
 
@@ -81,10 +83,42 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
 
     public TaskDetailsView getView(TaskSummary task) {
         this.task = task;
-        view.refreshTask(task);
+        refresh();
         return view;
     }
-    
+
+    public void refresh() {
+        taskServices.call(new RemoteCallback<TaskSummary>() {
+            @Override
+            public void callback(TaskSummary response) {
+                task = response;
+                view.refreshTask(task, task.getActualOwner().equals(identity.getName()));
+                refreshPotentialOwners();
+            }
+        }).getTaskDetails(task.getId());
+    }
+
+    public void refreshPotentialOwners() {
+        List<Long> taskIds = new ArrayList<Long>(1);
+        taskIds.add(task.getId());
+        taskServices.call(new RemoteCallback<Map<Long, List<String>>>() {
+            @Override
+            public void callback(Map<Long, List<String>> ids) {
+                if (ids.isEmpty()) {
+                    view.getPotentialOwnersText().setText("No potential owners");
+                } else {
+                    view.getPotentialOwnersText().setText(ids.get(task.getId()).toString());
+                }
+            }
+        }, new ErrorCallback<Message>() {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
+                view.displayNotification("Unexpected error encountered", throwable.getMessage());
+                return true;
+            }
+        }).getPotentialOwnersForTaskIds(taskIds);
+    }
+
     private void saveTask() {
         // TODO with forms
     }
@@ -94,7 +128,7 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             @Override
             public void callback(Void nothing) {
                 view.displayNotification("Success", "Task with id = " + task.getId() + " was released!");
-                // TODO refresh task and buttons
+                refresh();
             }
         }, new ErrorCallback<Message>() {
             @Override
@@ -110,7 +144,7 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             @Override
             public void callback(Void nothing) {
                 view.displayNotification("Success", "Task with id = " + task.getId() + " was claimed!");
-                // TODO refresh task and buttons
+                refresh();
             }
         }, new ErrorCallback<Message>() {
             @Override
@@ -120,21 +154,21 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             }
         }).claim(task.getId(), identity.getName());
     }
-    
+
     private void startTask() {
-        taskServices.call( new RemoteCallback<Void>() {
+        taskServices.call(new RemoteCallback<Void>() {
             @Override
-            public void callback( Void nothing ) {
-                view.displayNotification("Success", "Task with id = " + task.getId() + " was started!" );
-                // TODO refresh task and buttons
+            public void callback(Void nothing) {
+                view.displayNotification("Success", "Task with id = " + task.getId() + " was started!");
+                refresh();
             }
         }, new ErrorCallback<Message>() {
-           @Override
-           public boolean error( Message message, Throwable throwable ) {
+            @Override
+            public boolean error(Message message, Throwable throwable) {
                 view.displayNotification("Unexpected error encountered", throwable.getMessage());
-               return true;
-           }
-       } ).start(task.getId(), identity.getName());
+                return true;
+            }
+        }).start(task.getId(), identity.getName());
     }
 
     private void completeTask() {
@@ -143,7 +177,7 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             @Override
             public void callback(Void nothing) {
                 view.displayNotification("Success", "Task with id = " + task.getId() + " was completed!");
-                // TODO refresh task and buttons
+                refresh();
             }
         }, new ErrorCallback<Message>() {
             @Override
@@ -166,6 +200,7 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             public void callback(Void response) {
                 view.displayNotification("Success", "Task details has been updated for the task with id = "
                         + task.getId());
+                refresh();
             }
         }, new ErrorCallback<Message>() {
             @Override
@@ -181,7 +216,8 @@ public class TaskDetailsPresenter extends AbstractTaskPresenter {
             @Override
             public void callback(Void nothing) {
                 view.displayNotification("Success", "Task was succesfully delegated");
-                // TODO refresh potential owners and disable delegate button
+                view.getDelegateTextBox().setText("");
+                refresh();
             }
         }, new ErrorCallback<Message>() {
             @Override
