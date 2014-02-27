@@ -32,7 +32,6 @@ import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 import com.googlecode.mgwt.ui.client.widget.celllist.HasCellSelectedHandler;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
@@ -45,7 +44,6 @@ import org.kie.mobile.client.utils.TaskStatus;
  * @author livthomas
  * @author salaboy
  */
-@Dependent
 public class TaskListPresenter extends AbstractTaskPresenter {
 
     public interface TaskListView extends TaskView {

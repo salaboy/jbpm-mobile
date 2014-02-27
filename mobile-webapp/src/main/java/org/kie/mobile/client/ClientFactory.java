@@ -16,8 +16,8 @@
 
 package org.kie.mobile.client;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.kie.mobile.client.perspectives.newtask.NewTaskPresenter;
 import org.kie.mobile.client.perspectives.taskdetails.TaskDetailsPresenter;
 import org.kie.mobile.client.perspectives.tasklist.TaskListPresenter;
@@ -26,7 +26,7 @@ import org.kie.mobile.client.perspectives.tasklist.TaskListPresenter;
  *
  * @author livthomas
  */
-@Singleton
+@ApplicationScoped
 public class ClientFactory {
 
     @Inject

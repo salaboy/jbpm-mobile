@@ -29,7 +29,6 @@ import com.googlecode.mgwt.ui.client.widget.RoundPanel;
 import com.googlecode.mgwt.ui.client.widget.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
-import javax.enterprise.context.ApplicationScoped;
 import org.jbpm.console.ng.ht.model.TaskSummary;
 import org.kie.mobile.client.perspectives.AbstractTaskView;
 import org.kie.mobile.client.utils.TaskStatus;
@@ -38,7 +37,6 @@ import org.kie.mobile.client.utils.TaskStatus;
  *
  * @author livthomas
  */
-@ApplicationScoped
 public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDetailsPresenter.TaskDetailsView {
 
     private final Button saveButton;

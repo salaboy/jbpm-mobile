@@ -25,7 +25,6 @@ import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.celllist.BasicCell;
 import com.googlecode.mgwt.ui.client.widget.celllist.HasCellSelectedHandler;
 import java.util.List;
-import javax.enterprise.context.ApplicationScoped;
 import org.jbpm.console.ng.ht.model.TaskSummary;
 import org.kie.mobile.client.perspectives.AbstractTaskView;
 
@@ -34,7 +33,6 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
  * @author livthomas
  * @author salaboy
  */
-@ApplicationScoped
 public class TaskListViewGwtImpl extends AbstractTaskView implements TaskListPresenter.TaskListView {
 
     private final HeaderButton newTaskButton;

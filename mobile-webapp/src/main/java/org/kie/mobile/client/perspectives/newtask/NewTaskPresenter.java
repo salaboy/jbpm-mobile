@@ -32,7 +32,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
@@ -43,7 +42,6 @@ import org.kie.mobile.client.perspectives.AbstractTaskPresenter;
  * @author livthomas
  * @author salaboy
  */
-@Dependent
 public class NewTaskPresenter extends AbstractTaskPresenter {
 
     public interface NewTaskView extends TaskView {

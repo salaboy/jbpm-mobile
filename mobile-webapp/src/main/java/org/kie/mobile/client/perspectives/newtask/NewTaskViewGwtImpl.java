@@ -27,7 +27,6 @@ import com.googlecode.mgwt.ui.client.widget.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.RoundPanel;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.WidgetList;
-import javax.enterprise.context.ApplicationScoped;
 import org.kie.mobile.client.perspectives.AbstractTaskView;
 
 /**
@@ -35,7 +34,6 @@ import org.kie.mobile.client.perspectives.AbstractTaskView;
  * @author livthomas
  * @author salaboy
  */
-@ApplicationScoped
 public class NewTaskViewGwtImpl extends AbstractTaskView implements NewTaskPresenter.NewTaskView {
 
     private final MTextBox taskNameTextBox = new MTextBox();
