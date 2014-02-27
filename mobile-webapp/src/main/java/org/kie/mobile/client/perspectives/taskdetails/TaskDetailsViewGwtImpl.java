@@ -157,7 +157,9 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
 
     @Override
     public void refreshTask(TaskSummary task, boolean owned) {
-        switch (TaskStatus.valueOf(task.getStatus())) {
+        TaskStatus status = TaskStatus.valueOf(task.getStatus());
+
+        switch (status) {
             case Ready:
                 saveButton.setVisible(false);
                 releaseButton.setVisible(false);
@@ -193,13 +195,25 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
         priorityListBox.setSelectedIndex(task.getPriority());
         userTextBox.setText(task.getActualOwner());
 
+        if (status.equals(TaskStatus.Completed)) {
+            descriptionTextArea.setReadOnly(true);
+            dueOnDateBox.setReadOnly(true);
+            priorityListBox.setEnabled(false);
+            updateButton.setVisible(false);
+        } else {
+            descriptionTextArea.setReadOnly(false);
+            dueOnDateBox.setReadOnly(false);
+            priorityListBox.setEnabled(true);
+            updateButton.setVisible(true);
+        }
+
         String instanceId = (task.getProcessInstanceId() == -1) ? "None" : Long.toString(task.getProcessInstanceId());
         String definitionId = (task.getProcessId() == null) ? "None" : task.getProcessId();
         processInstanceIdTextBox.setText(instanceId);
         processDefinitionIdTextBox.setText(definitionId);
 
 //        potentialOwnersLabel.setText(task.getPotentialOwners().toString());
-        if (owned) {
+        if (owned && !status.equals(TaskStatus.Completed)) {
             delegateTextBox.setReadOnly(false);
             delegateButton.setVisible(true);
         } else {
