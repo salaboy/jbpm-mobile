@@ -172,7 +172,7 @@
             <artifactId>gwt-user</artifactId>
             <scope>provided</scope>
         </dependency> 
-
+        
         <!-- Rouge imports to avoid OSGi errors -->
         <dependency>
             <groupId>org.osgi</groupId>
@@ -194,7 +194,12 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-kie-services</artifactId>
-            
+        </dependency>
+    
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jbpm-mobile-generic</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

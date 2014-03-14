@@ -15,6 +15,11 @@
   <packaging>pom</packaging>
   <name>jBPM Mobile</name>
   
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <mgwt.version>1.1.2</mgwt.version>
+  </properties>
+  
   <modules>
     <module>jbpm-mobile-human-tasks</module>
     <module>jbpm-mobile-generic</module>

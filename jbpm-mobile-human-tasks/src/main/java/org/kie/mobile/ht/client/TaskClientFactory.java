@@ -27,7 +27,7 @@ import org.kie.mobile.ht.client.tasklist.TaskListPresenter;
  * @author livthomas
  */
 @ApplicationScoped
-public class ClientFactory {
+public class TaskClientFactory {
 
     @Inject
     private NewTaskPresenter newTaskPresenter;

@@ -43,7 +43,6 @@ public class TaskListViewGwtImpl extends AbstractTaskView implements TaskListPre
 
     public TaskListViewGwtImpl() {
         title.setHTML("Task List");
-        headerBackButton.setVisible(false);
 
         newTaskButton = new HeaderButton();
         newTaskButton.setText("New task");

@@ -44,7 +44,7 @@ import org.kie.mobile.ht.client.AbstractTaskPresenter;
  */
 public class NewTaskPresenter extends AbstractTaskPresenter {
 
-    public interface NewTaskView extends TaskView {
+    public interface NewTaskView extends View {
 
         HasText getTaskNameTextBox();
 

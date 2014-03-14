@@ -44,7 +44,7 @@ import org.kie.mobile.ht.client.AbstractTaskPresenter;
  */
 public class TaskDetailsPresenter extends AbstractTaskPresenter {
 
-    public interface TaskDetailsView extends TaskView {
+    public interface TaskDetailsView extends View {
 
         void refreshTask(TaskSummary task, boolean owned);
 

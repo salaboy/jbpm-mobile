@@ -13,16 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.mobile.ht.client;
+package org.kie.mobile.client;
 
-import org.kie.mobile.client.AbstractView;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 
 /**
- *
+ * 
  * @author livthomas
  */
-public abstract class AbstractTaskView extends AbstractView {
+public abstract class AbstractPresenter {
 
-    protected final String[] priorities = {"0 - High", "1", "2", "3", "4", "5 - Medium", "6", "7", "8", "9", "10 - Low"};
+    public interface View extends IsWidget {
+
+        void displayNotification(String title, String text);
+
+        HasTapHandlers getBackButton();
+
+    }
 
 }

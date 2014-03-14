@@ -15,7 +15,6 @@
  */
 package org.kie.mobile.client;
 
-import org.kie.mobile.ht.client.ClientFactory;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
@@ -29,16 +28,18 @@ import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import javax.inject.Inject;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
-import org.uberfire.security.Identity;
+import org.kie.mobile.client.home.HomePresenter;
 
+/**
+ *
+ * @author salaboy
+ * @author livthomas
+ */
 @EntryPoint
 public class ShowcaseEntryPoint {
     
     @Inject
-    private ClientFactory clientFactory;
-    
-    @Inject
-    private Identity identity;
+    private HomePresenter homePresenter;
     
     @AfterInitialization
     public void startApp() {
@@ -69,7 +70,7 @@ public class ShowcaseEntryPoint {
         RootPanel.get().add(animationHelper);
 
         //animate
-        animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE);
+        animationHelper.goTo(homePresenter.getView(), Animation.SLIDE);
     }
 
    private void hideLoadingPopup() {

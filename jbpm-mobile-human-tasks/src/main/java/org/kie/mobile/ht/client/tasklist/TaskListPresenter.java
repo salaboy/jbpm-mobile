@@ -46,7 +46,7 @@ import org.kie.mobile.ht.client.utils.TaskStatus;
  */
 public class TaskListPresenter extends AbstractTaskPresenter {
 
-    public interface TaskListView extends TaskView {
+    public interface TaskListView extends View {
 
         HasTapHandlers getNewTaskButton();
 
