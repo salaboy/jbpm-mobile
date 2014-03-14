@@ -45,12 +45,11 @@ import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.security.impl.authz.RuntimeAuthorizationManager;
 import org.uberfire.security.server.cdi.SecurityFactory;
 
-
-@ApplicationScoped
-@Startup
 /**
- * This class should contain all ApplicationScoped producers required by the application.
+ * This class should contain all ApplicationScoped producers
+ * required by the application.
  */
+@ApplicationScoped
 public class ApplicationScopedProvider {
 
     @Inject

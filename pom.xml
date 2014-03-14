@@ -20,6 +20,7 @@
     <module>jbpm-mobile-generic</module>
     <module>jbpm-mobile-process-runtime</module>
     <module>jbpm-mobile-showcase</module>
+    <module>jbpm-mobile-distribution-war</module>
   </modules>
   
   <dependencies>
