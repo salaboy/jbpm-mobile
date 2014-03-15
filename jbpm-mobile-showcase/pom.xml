@@ -34,10 +34,6 @@
     <name>jBPM Mobile - Showcase</name>
     <description>Mobile PoC WebApp</description>
     
-    <properties>
-        <mgwt.version>1.1.2</mgwt.version>
-    </properties>
-    
     <dependencies>
         <dependency>
             <groupId>org.kie</groupId>
@@ -206,6 +202,11 @@
             <artifactId>jbpm-mobile-human-tasks</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jbpm-mobile-process-runtime</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -243,6 +244,8 @@
                         <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-backend</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
                         <compileSourcesArtifact>org.jbpm:jbpm-console-ng-human-tasks-api</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.jbpm:jbpm-console-ng-process-runtime-api</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.jbpm:jbpm-console-ng-business-domain-api</compileSourcesArtifact>
             
                     </compileSourcesArtifacts>
                     <runTarget>org.kie.mobile.MobileShowcase/KIEMobile.html</runTarget>

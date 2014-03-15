@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.kie.mobile.ht.client;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -49,5 +48,5 @@ public class TaskClientFactory {
     public TaskDetailsPresenter getTaskDetailsPresenter() {
         return taskDetailsPresenter;
     }
-    
+
 }

@@ -13,6 +13,7 @@
   <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksAPI"/>
   
   <inherits name="org.kie.mobile.ht.JbpmMobileHumanTasksClient"/>
+  <inherits name="org.kie.mobile.pr.JbpmMobileProcessRuntimeClient"/>
 
   <!-- Specify the application specific style sheet. -->
   <set-property name="user.agent" value="safari" />
