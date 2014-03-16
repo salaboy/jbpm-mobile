@@ -69,15 +69,7 @@ profile in pom.xml to use that. -->
     <param-value>/WEB-INF/errai.properties</param-value>
   </context-param>
 
-  <context-param>
-    <param-name>login.config</param-name>
-    <param-value>/WEB-INF/login.config</param-value>
-  </context-param>
-
-  <context-param>
-    <param-name>users.properties</param-name>
-    <param-value>/WEB-INF/users.properties</param-value>
-  </context-param>
+ 
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
@@ -99,19 +91,7 @@ profile in pom.xml to use that. -->
     </auth-constraint>
   </security-constraint>
 
-    <security-constraint>
-        <web-resource-collection>
-          <web-resource-name>formModeler</web-resource-name>
-          <url-pattern>/formModeler/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-          <role-name>admin</role-name>
-          <role-name>analyst</role-name>
-          <role-name>developer</role-name>
-          <role-name>user</role-name>
-          <role-name>manager</role-name>
-        </auth-constraint>
-    </security-constraint>
+   
 
   <login-config>
     <auth-method>FORM</auth-method>

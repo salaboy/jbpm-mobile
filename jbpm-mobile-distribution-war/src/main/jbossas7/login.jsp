@@ -1,11 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/i18n-1.0" prefix="i18n" %>
-<i18n:bundle id="bundle" baseName="org.kie.workbench.client.resources.i18n.AppConstants"
-             locale='<%=request.getLocale()%>'/>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title><i18n:message key="LoginTitle">jBPM Console NG</i18n:message></title>
+    <title>jBPM Console NG</title>
 
     <style type="text/css">
         * {
@@ -139,19 +138,19 @@
         </c:if>
         <form action="j_security_check" method="POST">
             <p>
-                <label><i18n:message key="UserName">Username</i18n:message></label>
+                <label>Username</label>
                 <input value="" name="j_username" class="text-input" type="text"/>
             </p>
             <br style="clear: both;"/>
 
             <p>
-                <label><i18n:message key="Password">Password</i18n:message></label>
+                <label>Password</label>
                 <input name="j_password" class="text-input" type="password"/>
             </p>
             <br style="clear: both;"/>
 
             <p>
-                <input class="button" type="submit" value='<i18n:message key="SignIn">Sign In</i18n:message>'/>
+                <input class="button" type="submit" value='Sign In'/>
             </p>
 
         </form>
