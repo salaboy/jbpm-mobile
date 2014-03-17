@@ -16,7 +16,7 @@
 
   <!-- Specify the application specific style sheet. -->
   <set-property name="user.agent" value="safari" />
-
+  <set-property name="mgwt.os" value="iphone,retina,ipad,ipad_retina,desktop,android,android_tablet,blackberry" />  
   <!-- Specify the paths for translatable code -->
   <source path='client'/>
 
