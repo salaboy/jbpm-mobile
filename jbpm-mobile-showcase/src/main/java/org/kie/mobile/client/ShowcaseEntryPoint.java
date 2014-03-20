@@ -63,7 +63,9 @@ public class ShowcaseEntryPoint {
 
     private void start() {
         //set viewport and other settings for mobile
-        MGWT.applySettings(MGWTSettings.getAppSetting());
+        MGWTSettings appSetting = MGWTSettings.getAppSetting();
+        
+        MGWT.applySettings(appSetting);
 
         //build animation helper and attach it
         AnimationHelper animationHelper = new AnimationHelper();

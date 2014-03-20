@@ -53,7 +53,17 @@
 
         <dependency>
             <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-console-ng-business-domain-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jbpm</groupId>
             <artifactId>jbpm-console-ng-business-domain-backend</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.kie.workbench.widgets</groupId>
+            <artifactId>kie-wb-common-ui</artifactId>
         </dependency>
 
         <dependency>

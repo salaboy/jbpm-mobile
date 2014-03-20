@@ -201,6 +201,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>jbpm-mobile-human-tasks</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>errai-ui</artifactId>
+                    <groupId>org.jboss.errai</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

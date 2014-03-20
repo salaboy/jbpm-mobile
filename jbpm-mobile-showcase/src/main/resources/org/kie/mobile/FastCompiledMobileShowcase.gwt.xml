@@ -8,5 +8,4 @@
     <set-property name="user.agent" value="safari" />
     <set-property name="locale" value="default"/>
     <set-property name="mgwt.os" value="iphone" />  
-    <set-configuration-property name="mgwt.css" value="pretty" />
 </module>

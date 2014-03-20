@@ -62,17 +62,17 @@ public class AppSetup {
 
     @PostConstruct
     public void onStartup() {
-        final Repository repository = repositoryService.getRepository( PLAYGROUND_ALIAS );
-        if ( repository == null ) {
-            repositoryService.createRepository( PLAYGROUND_SCHEME, PLAYGROUND_ALIAS,
-                                                new HashMap<String, Object>() {{
-                                                    put( "origin", PLAYGROUND_ORIGIN );
-                                                    put( "username", PLAYGROUND_UID );
-                                                    put( "crypt:password", PLAYGROUND_PWD );
-                                                }} );
-        }
-
-        configurationService.addConfiguration(getGlobalConfiguration());
+//        final Repository repository = repositoryService.getRepository( PLAYGROUND_ALIAS );
+//        if ( repository == null ) {
+//            repositoryService.createRepository( PLAYGROUND_SCHEME, PLAYGROUND_ALIAS,
+//                                                new HashMap<String, Object>() {{
+//                                                    put( "origin", PLAYGROUND_ORIGIN );
+//                                                    put( "username", PLAYGROUND_UID );
+//                                                    put( "crypt:password", PLAYGROUND_PWD );
+//                                                }} );
+//        }
+//
+//        configurationService.addConfiguration(getGlobalConfiguration());
 
         // notify cluster service that bootstrap is completed to start synchronization
         applicationStartedEvent.fire(new ApplicationStarted());
