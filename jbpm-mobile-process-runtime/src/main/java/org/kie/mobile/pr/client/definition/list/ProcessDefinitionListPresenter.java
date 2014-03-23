@@ -28,7 +28,7 @@ import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.bd.service.DataServiceEntryPoint;
 import org.jbpm.console.ng.pr.model.ProcessSummary;
-import org.kie.mobile.pr.client.definition.AbstractProcessPresenter;
+import org.kie.mobile.pr.client.AbstractProcessPresenter;
 
 /**
  *
@@ -79,7 +79,6 @@ public class ProcessDefinitionListPresenter extends AbstractProcessPresenter {
                         refresh();
                     }
                 }.schedule(1000);
-
             }
         });
         view.setHeaderPullHandler(headerHandler);

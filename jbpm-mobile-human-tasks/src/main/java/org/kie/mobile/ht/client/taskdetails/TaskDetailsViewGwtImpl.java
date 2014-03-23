@@ -189,6 +189,14 @@ public class TaskDetailsViewGwtImpl extends AbstractTaskView implements TaskDeta
                 completeButton.setVisible(false);
         }
 
+        if (!owned) {
+            saveButton.setVisible(false);
+            releaseButton.setVisible(false);
+            claimButton.setVisible(false);
+            startButton.setVisible(false);
+            completeButton.setVisible(false);
+        }
+
         descriptionTextArea.setText(task.getDescription());
         statusTextBox.setText(task.getStatus());
         dueOnDateBox.setText(new DateRenderer().render(task.getExpirationTime()));

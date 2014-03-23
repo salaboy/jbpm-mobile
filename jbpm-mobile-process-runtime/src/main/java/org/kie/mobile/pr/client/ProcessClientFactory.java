@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.mobile.pr.client.definition;
+package org.kie.mobile.pr.client;
 
 import com.google.inject.Inject;
 import javax.enterprise.context.ApplicationScoped;

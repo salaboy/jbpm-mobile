@@ -35,7 +35,7 @@ public class ProcessDefinitionListViewImpl extends AbstractView implements Proce
     
     private PullArrowHeader pullArrowHeader;
     
-    private CellList<ProcessSummary> definitionsList;
+    private final CellList<ProcessSummary> definitionsList;
 
     public ProcessDefinitionListViewImpl() {
         title.setHTML("Process Definitions");
@@ -52,7 +52,6 @@ public class ProcessDefinitionListViewImpl extends AbstractView implements Proce
             }
         });
         pullPanel.add(definitionsList);
-        
     }
 
     @Override

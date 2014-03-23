@@ -25,7 +25,7 @@ import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import javax.inject.Inject;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.kie.mobile.ht.client.TaskClientFactory;
-import org.kie.mobile.pr.client.definition.ProcessClientFactory;
+import org.kie.mobile.pr.client.ProcessClientFactory;
 
 /**
  *
@@ -58,6 +58,16 @@ public class HomePresenter {
 
     @AfterInitialization
     public void init() {
+        view.getProcessDefinitionsButton().addTapHandler(new TapHandler() {
+            @Override
+            public void onTap(TapEvent event) {
+                AnimationHelper animationHelper = new AnimationHelper();
+                RootPanel.get().clear();
+                RootPanel.get().add(animationHelper);
+                animationHelper.goTo(processClientFactory.getProcessDefinitionListPresenter().getView(), Animation.SLIDE);
+            }
+        });
+        
         view.getTasksListButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
