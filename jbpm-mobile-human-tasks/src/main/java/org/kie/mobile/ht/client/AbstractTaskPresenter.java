@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import org.jboss.errai.common.client.api.Caller;
 import org.jbpm.console.ng.ht.service.TaskServiceEntryPoint;
 import org.kie.mobile.client.AbstractPresenter;
+import org.kie.mobile.client.ClientFactory;
 import org.uberfire.security.Identity;
 
 /**
@@ -31,7 +32,7 @@ public abstract class AbstractTaskPresenter extends AbstractPresenter {
     protected Caller<TaskServiceEntryPoint> taskServices;
 
     @Inject
-    protected TaskClientFactory clientFactory;
+    protected ClientFactory clientFactory;
 
     @Inject
     protected Identity identity;

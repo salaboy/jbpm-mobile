@@ -17,12 +17,13 @@ package org.kie.mobile.client;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 
 /**
  * 
  * @author livthomas
  */
-public abstract class AbstractPresenter {
+public abstract class AbstractPresenter extends MGWTAbstractActivity {
 
     public interface View extends IsWidget {
 

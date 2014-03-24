@@ -13,19 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.kie.mobile.pr.client;
+package org.kie.mobile.client.home;
 
-import javax.inject.Inject;
-import org.kie.mobile.client.AbstractPresenter;
-import org.kie.mobile.client.ClientFactory;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceTokenizer;
 
 /**
  *
  * @author livthomas
  */
-public abstract class AbstractProcessPresenter extends AbstractPresenter {
+public class HomePlace extends Place {
+    
+	public static class HomePlaceTokenizer implements PlaceTokenizer<HomePlace> {
 
-    @Inject
-    protected ClientFactory clientFactory;
+		@Override
+		public HomePlace getPlace(String token) {
+			return new HomePlace();
+		}
+
+		@Override
+		public String getToken(HomePlace place) {
+			return "";
+		}
+
+	}
 
 }

@@ -15,14 +15,13 @@
  */
 package org.kie.mobile.ht.client.tasklist;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.mvp.client.Animation;
-import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
@@ -32,11 +31,14 @@ import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 import com.googlecode.mgwt.ui.client.widget.celllist.HasCellSelectedHandler;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.console.ng.ht.model.TaskSummary;
 import org.kie.mobile.ht.client.AbstractTaskPresenter;
+import org.kie.mobile.ht.client.newtask.NewTaskPlace;
+import org.kie.mobile.ht.client.taskdetails.TaskDetailsPlace;
 import org.kie.mobile.ht.client.utils.TaskStatus;
 
 /**
@@ -44,6 +46,7 @@ import org.kie.mobile.ht.client.utils.TaskStatus;
  * @author livthomas
  * @author salaboy
  */
+@ApplicationScoped
 public class TaskListPresenter extends AbstractTaskPresenter {
 
     public interface TaskListView extends View {
@@ -66,7 +69,6 @@ public class TaskListPresenter extends AbstractTaskPresenter {
     private TaskListView view;
 
     public TaskListView getView() {
-        refresh();
         return view;
     }
 
@@ -77,10 +79,7 @@ public class TaskListPresenter extends AbstractTaskPresenter {
         view.getNewTaskButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(clientFactory.getNewTaskPresenter().getView(), Animation.SLIDE);
+                clientFactory.getPlaceController().goTo(new NewTaskPlace());
             }
         });
 
@@ -109,15 +108,9 @@ public class TaskListPresenter extends AbstractTaskPresenter {
         view.getTaskList().addCellSelectedHandler(new CellSelectedHandler() {
             @Override
             public void onCellSelected(CellSelectedEvent event) {
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(clientFactory.getTaskDetailsPresenter().getView(taskList.get(event.getIndex())),
-                        Animation.SLIDE);
+                clientFactory.getPlaceController().goTo(new TaskDetailsPlace(taskList.get(event.getIndex()).getId()));
             }
         });
-
-        refresh();
     }
 
     public void refresh() {
@@ -132,6 +125,12 @@ public class TaskListPresenter extends AbstractTaskPresenter {
                 view.render(taskList);
             }
         }).getTasksAssignedAsPotentialOwnerByExpirationDateOptional(identity.getName(), statuses, null, "en-UK");
+    }
+
+    @Override
+    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        refresh();
+        panel.setWidget(view);
     }
 
 }

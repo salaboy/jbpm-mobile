@@ -15,14 +15,13 @@
  */
 package org.kie.mobile.ht.client.newtask;
 
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.mvp.client.Animation;
-import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import com.googlecode.mgwt.ui.client.widget.MDateBox.DateParser;
 import com.googlecode.mgwt.ui.client.widget.MDateBox.DateRenderer;
 import com.googlecode.mgwt.ui.client.widget.MListBox;
@@ -32,16 +31,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.kie.mobile.ht.client.AbstractTaskPresenter;
+import org.kie.mobile.ht.client.tasklist.TaskListPlace;
 
 /**
  *
  * @author livthomas
  * @author salaboy
  */
+@ApplicationScoped
 public class NewTaskPresenter extends AbstractTaskPresenter {
 
     public interface NewTaskView extends View {
@@ -93,10 +95,7 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
                     view.getAssignToMeCheckBox().setValue(false);
                     view.getDueOnDateBox().setText(new DateRenderer().render(new Date()));
 
-                    AnimationHelper animationHelper = new AnimationHelper();
-                    RootPanel.get().clear();
-                    RootPanel.get().add(animationHelper);
-                    animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE_REVERSE);
+                    clientFactory.getPlaceController().goTo(new TaskListPlace());
                 } catch (ParseException ex) {
                     view.displayNotification("Wrong date format", "Enter the date in the correct format!");
                 }
@@ -107,10 +106,7 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
             @Override
             public void onTap(TapEvent event) {
                 view.getTaskNameTextBox().setText("");
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(clientFactory.getTaskListPresenter().getView(), Animation.SLIDE_REVERSE);
+                clientFactory.getPlaceController().goTo(new TaskListPlace());
             }
         });
     }
@@ -146,9 +142,14 @@ public class NewTaskPresenter extends AbstractTaskPresenter {
         taskServices.call(new RemoteCallback<Long>() {
             @Override
             public void callback(Long taskId) {
-                clientFactory.getTaskListPresenter().refresh();
+//                clientFactory.getTaskListPresenter().refresh();
             }
         }).addTask(str, null, templateVars);
+    }
+
+    @Override
+    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        panel.setWidget(view);
     }
 
 }

@@ -12,7 +12,7 @@
   <artifactId>jbpm-mobile-distribution-war</artifactId>
   <packaging>pom</packaging>
 
-  <name>jBPM Mobile Distribution War</name>
+  <name>jBPM Mobile - Distribution War</name>
   <description>
     This module builds the download war for jboss as 7.
   </description>

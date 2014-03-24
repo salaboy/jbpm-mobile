@@ -15,23 +15,28 @@
  */
 package org.kie.mobile.client.home;
 
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.mvp.client.Animation;
-import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
+import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
-import org.kie.mobile.ht.client.TaskClientFactory;
-import org.kie.mobile.pr.client.ProcessClientFactory;
+import org.kie.mobile.client.ClientFactory;
+import org.kie.mobile.ht.client.tasklist.TaskListPlace;
+import org.kie.mobile.ht.client.tasklist.TaskListPresenter;
+import org.kie.mobile.pr.client.definition.list.ProcessDefinitionListPlace;
+import org.kie.mobile.pr.client.definition.list.ProcessDefinitionListPresenter;
 
 /**
  *
  * @author livthomas
  */
-public class HomePresenter {
+@ApplicationScoped
+public class HomePresenter extends MGWTAbstractActivity {
 
     public interface HomeView extends IsWidget {
 
@@ -44,10 +49,13 @@ public class HomePresenter {
     }
 
     @Inject
-    private TaskClientFactory taskClientFactory;
+    private ClientFactory clientFactory;
+    
+    @Inject
+    private TaskListPresenter taskListPresenter;
 
     @Inject
-    private ProcessClientFactory processClientFactory;
+    private ProcessDefinitionListPresenter processDefinitionListPresenter;
 
     @Inject
     private HomeView view;
@@ -61,42 +69,35 @@ public class HomePresenter {
         view.getProcessDefinitionsButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(processClientFactory.getProcessDefinitionListPresenter().getView(), Animation.SLIDE);
+                clientFactory.getPlaceController().goTo(new ProcessDefinitionListPlace());
             }
         });
         
         view.getTasksListButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(taskClientFactory.getTaskListPresenter().getView(), Animation.SLIDE);
+                clientFactory.getPlaceController().goTo(new TaskListPlace());
             }
         });
 
-        taskClientFactory.getTaskListPresenter().getView().getBackButton().addTapHandler(new TapHandler() {
+        taskListPresenter.getView().getBackButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(getView(), Animation.SLIDE_REVERSE);
+                clientFactory.getPlaceController().goTo(new HomePlace());
             }
         });
         
-        processClientFactory.getProcessDefinitionListPresenter().getView().getBackButton().addTapHandler(new TapHandler() {
+        processDefinitionListPresenter.getView().getBackButton().addTapHandler(new TapHandler() {
             @Override
             public void onTap(TapEvent event) {
-                AnimationHelper animationHelper = new AnimationHelper();
-                RootPanel.get().clear();
-                RootPanel.get().add(animationHelper);
-                animationHelper.goTo(getView(), Animation.SLIDE_REVERSE);
+                clientFactory.getPlaceController().goTo(new HomePlace());
             }
         });
+    }
+
+    @Override
+    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        panel.setWidget(view);
     }
 
 }

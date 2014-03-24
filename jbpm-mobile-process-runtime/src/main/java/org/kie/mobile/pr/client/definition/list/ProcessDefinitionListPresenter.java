@@ -15,14 +15,17 @@
  */
 package org.kie.mobile.pr.client.definition.list;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.googlecode.mgwt.ui.client.widget.base.HasRefresh;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowStandardHandler;
 import com.googlecode.mgwt.ui.client.widget.base.PullArrowWidget;
 import com.googlecode.mgwt.ui.client.widget.base.PullPanel;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
@@ -34,6 +37,7 @@ import org.kie.mobile.pr.client.AbstractProcessPresenter;
  *
  * @author livthomas
  */
+@ApplicationScoped
 public class ProcessDefinitionListPresenter extends AbstractProcessPresenter {
     
     public interface ProcessDefinitionListView extends View {
@@ -94,6 +98,11 @@ public class ProcessDefinitionListPresenter extends AbstractProcessPresenter {
                 view.render(definitionsList);
             }
         } ).getProcesses();
+    }
+
+    @Override
+    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        panel.setWidget(view);
     }
 
 }

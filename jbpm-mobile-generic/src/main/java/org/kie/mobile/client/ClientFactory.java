@@ -13,19 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.kie.mobile.pr.client;
+package org.kie.mobile.client;
 
-import javax.inject.Inject;
-import org.kie.mobile.client.AbstractPresenter;
-import org.kie.mobile.client.ClientFactory;
+import com.google.gwt.place.shared.PlaceController;
+import com.google.web.bindery.event.shared.EventBus;
 
 /**
  *
  * @author livthomas
  */
-public abstract class AbstractProcessPresenter extends AbstractPresenter {
-
-    @Inject
-    protected ClientFactory clientFactory;
+public interface ClientFactory {
+    
+    EventBus getEventBus();
+    
+    PlaceController getPlaceController();
 
 }
