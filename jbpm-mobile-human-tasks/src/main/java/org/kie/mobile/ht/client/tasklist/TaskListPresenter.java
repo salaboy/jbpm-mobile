@@ -129,8 +129,8 @@ public class TaskListPresenter extends AbstractTaskPresenter {
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        refresh();
         panel.setWidget(view);
+        refresh();
     }
 
 }
