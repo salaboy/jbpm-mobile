@@ -9,6 +9,7 @@
 
   <!-- Uberfire dependencies -->
   <inherits name="org.uberfire.UberfireClientAll"/>
+  <inherits name="org.uberfire.UberfireNSWEManager"/>
   
   <inherits name="org.jbpm.console.ng.ht.JbpmConsoleNGHumanTasksAPI"/>
   
